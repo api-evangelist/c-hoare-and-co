@@ -1,0 +1,114 @@
+aid: c-hoare-and-co
+name: C. Hoare & Co.
+review:
+  question: Does C. Hoare & Co. expose a public developer portal and confirmable Open
+    Banking API surface, and if so under what standard and auth model?
+  answer: true
+  date: '2026-07-23'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    C. Hoare & Co. — the UK's oldest privately-owned bank and an FCA-authorised
+    ASPSP — runs a live public developer portal at developer.hoaresbank.co.uk
+    (MuleSoft Anypoint Exchange, HTTP 200). The portal documents three OBIE
+    Read/Write products: an Account and Transaction Information API (AIS,
+    v3.1.0), a Payment Initiation API (PIS, v3.1.0), and a Dynamic Client
+    Registration proxy (DCR, v3.1-RC1). No Confirmation of Funds (CBPII) product
+    is published. Because C. Hoare & Co. is a private bank and NOT one of the
+    CMA9, it does NOT publish the unauthenticated Open Data (ATM / Branch /
+    Product) reference APIs mandated of the CMA9 — no Open Data endpoint was
+    found or confirmable, and none was fabricated. The production API host
+    api.hoaresbank.co.uk resolves in DNS (CNAME api.app01.live.digital.hoaresbank.co.uk)
+    but refuses plain TLS connections (curl exit / HTTP 000) because it requires
+    a mutual-TLS client certificate at the transport layer — the expected
+    behaviour for a FAPI-secured PSD2 production endpoint. Access therefore
+    cannot be confirmed with an anonymous 200 and requires OBIE/eIDAS
+    certificates plus TPP onboarding. The developer portal exposes a live
+    OpenID configuration document at
+    developer.hoaresbank.co.uk/.well-known/openid-configuration (HTTP 200).
+  posture: private-bank
+  cma9: false
+  authModel:
+    fapi: true
+    oauth2_oidc: true
+    mtls: true
+    psd2_sca: true
+    dynamic_client_registration: true
+    onboarding: TPP onboarding with OBIE/eIDAS certificates required before
+      production access
+  openDataConfirmed: false
+  openDataNote: |
+    No Open Data (ATM / Branch / Personal & Business Current Account / product)
+    API is published by C. Hoare & Co. As a non-CMA9 private bank it is not
+    subject to the CMA Open Data mandate. Probes of standard Open Data path
+    shapes on the bank's hosts returned no live JSON (HTTP 000 / no such host);
+    no Open Data base URL was invented.
+  specProvenance: |
+    The three harvested OpenAPI documents in openapi/ are the SHARED OBIE
+    Read/Write standard v3.1.0 (OpenAPIS 3.0.1) taken verbatim from
+    github.com/OpenBankingUK/read-write-api-specs at tag v3.1.0
+    (account-info, payment-initiation, client-registration). They are the
+    standard contracts C. Hoare & Co. declares conformance to on its developer
+    portal — they are NOT bank-proprietary documents downloaded from Hoare's
+    own servers. The bank's own Swagger renders behind the Anypoint portal but
+    was not offered as a standalone downloadable file.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+      documented: true
+      verified200: false
+      note: OBIE AIS base. Host resolves in DNS; production access is mTLS-gated
+        (FAPI), so an anonymous probe returns no response (000).
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/pisp
+      documented: true
+      verified200: false
+      note: OBIE PIS base. mTLS-gated FAPI production endpoint.
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1
+      documented: true
+      verified200: false
+      note: OBIE Dynamic Client Registration proxy base. mTLS-gated.
+  endpointsProbed:
+    - url: https://developer.hoaresbank.co.uk/
+      status: 200
+      note: Public developer portal (MuleSoft Anypoint Exchange).
+    - url: https://developer.hoaresbank.co.uk/.well-known/openid-configuration
+      status: 200
+      note: Live OpenID Connect discovery document served by the portal.
+    - url: https://www.hoaresbank.co.uk/open-banking
+      status: 200
+      note: Public Open Banking information page for customers and TPPs.
+    - url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+      status: 200
+    - url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+      status: 200
+    - url: https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+      status: 200
+    - url: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp/account-access-consents
+      status: 000
+      note: Connection refused / reset without mTLS client certificate (expected).
+    - url: https://api.hoaresbank.co.uk/open-banking/v2.3/atms
+      status: 000
+      note: No Open Data surface; host refuses anonymous connection.
+sources:
+  - url: https://www.hoaresbank.co.uk/open-banking
+    type: Documentation
+    note: Directs developers to developer.hoaresbank.co.uk; developer support at
+      developersupport@hoaresbank.co.uk.
+  - url: https://developer.hoaresbank.co.uk/
+    type: DeveloperPortal
+    note: Lists ob-account-and-transaction-api v3.1.0, ob-payment-initiation
+      v3.1.0, ob-dynamic-client-registration-proxy v3.1-RC1.
+  - url: https://www.openbanking.org.uk/regulated-providers/c-hoare-co-2/
+    type: Registration
+    note: Confirms C. Hoare & Co. as a regulated Open Banking ASPSP participant.
+  - url: https://register.fca.org.uk/s/firm?id=001b000000MfFMxAAN
+    type: Compliance
+    note: FCA Financial Services Register entry for C. HOARE & CO.
+  - url: https://github.com/OpenBankingUK/read-write-api-specs
+    type: OpenAPI
+    note: Source of the harvested OBIE Read/Write standard v3.1.0 specs.
