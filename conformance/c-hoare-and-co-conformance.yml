@@ -1,0 +1,62 @@
+generated: '2026-07-23'
+method: derived
+source: openapi/*.yml + apis.yml identity (FCA authorisation, OBIE registration)
+standards:
+  - id: obie-read-write-3.1
+    name: OBIE Read/Write API Specification v3.1
+    conforms: true
+    evidence: >-
+      All three published contracts (Account & Transaction, Payment Initiation,
+      Dynamic Client Registration) are the OBIE v3.1 Read/Write specifications;
+      humanURLs reference ob-account-and-transaction-api-v3-1-0 and ob-payment-initiation-v3-1-0.
+  - id: psd2
+    name: PSD2 (EU/UK Payment Services Directive 2)
+    conforms: true
+    evidence: FCA-authorised ASPSP exposing AIS + PIS with PSD2 strong customer authentication.
+  - id: fapi-1.0
+    name: FAPI 1.0 (Financial-grade API)
+    conforms: true
+    evidence: x-fapi-interaction-id / x-fapi-auth-date / x-fapi-customer-ip-address headers and FAPI-secured OAuth2 profile across operations.
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: true
+    evidence: openapi securitySchemes type oauth2 (authorizationCode + clientCredentials flows).
+  - id: oidc
+    name: OpenID Connect
+    conforms: true
+    evidence: OBIE hybrid-flow OIDC with PSD2 SCA; openid-configuration referenced on the developer portal.
+  - id: mutual-tls
+    name: Mutual TLS client authentication (RFC 8705)
+    conforms: true
+    evidence: OBIE/eIDAS transport-certificate mTLS required for production TPP access.
+  - id: jws-detached
+    name: Detached JWS request signing (OBIE profile)
+    conforms: true
+    evidence: x-jws-signature header on Payment Initiation write operations.
+  - id: dcr
+    name: OAuth 2.0 Dynamic Client Registration (RFC 7591, OBIE profile)
+    conforms: true
+    evidence: Dynamic Client Registration proxy API accepts a signed Software Statement Assertion.
+  - id: rfc9457-problem-details
+    name: RFC 9457 Problem Details
+    conforms: false
+    evidence: errors use the OBIE OBErrorResponse1 envelope (application/json), not application/problem+json.
+  - id: json-api
+    name: JSON:API
+    conforms: false
+  - id: pagination
+    name: Cursor/link-based pagination
+    conforms: true
+    evidence: OBIE Links + Meta blocks on bulk resources.
+  - id: idempotency
+    name: Idempotent write operations
+    conforms: true
+    evidence: x-idempotency-key header on Payment Initiation POST operations.
+compliance_program:
+  fca_authorised: true
+  fca_register: https://register.fca.org.uk/s/firm?id=001b000000MfFMxAAN
+  open_banking_registration: https://www.openbanking.org.uk/regulated-providers/c-hoare-co-2/
+  note: >-
+    Regulatory authorisation (FCA-authorised ASPSP, Open Banking registered provider),
+    not a voluntary security-assurance program (SOC 2 / ISO 27001) — those are not
+    publicly published for this private bank.

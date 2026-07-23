@@ -1,0 +1,110 @@
+generated: '2026-07-23'
+method: derived
+source: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml, openapi/c-hoare-and-co-payment-initiation-api-openapi.yml
+note: >-
+  Entity-relationship graph derived from the OBIE v3.1 Read/Write resource model.
+  Identifiers are OBIE-assigned strings (AccountId, ConsentId, DomesticPaymentId,
+  StatementId) rather than prefixed opaque ids.
+entities:
+  - name: AccountAccessConsent
+    id: ConsentId
+    api: account-and-transaction
+    description: PSU authorisation grant scoping which accounts and permissions an AISP may read.
+  - name: Account
+    id: AccountId
+    api: account-and-transaction
+    description: A customer account the consent grants access to.
+  - name: Balance
+    api: account-and-transaction
+    description: Balance snapshot(s) for an account.
+  - name: Transaction
+    api: account-and-transaction
+    description: Booked/pending transaction on an account.
+  - name: Beneficiary
+    api: account-and-transaction
+  - name: StandingOrder
+    api: account-and-transaction
+  - name: DirectDebit
+    api: account-and-transaction
+  - name: ScheduledPayment
+    api: account-and-transaction
+  - name: Statement
+    id: StatementId
+    api: account-and-transaction
+  - name: Party
+    api: account-and-transaction
+  - name: Product
+    api: account-and-transaction
+  - name: DomesticPaymentConsent
+    id: ConsentId
+    api: payment-initiation
+    description: PSU-authorised consent to initiate a single domestic payment.
+  - name: DomesticPayment
+    id: DomesticPaymentId
+    api: payment-initiation
+    description: An executed domestic payment order created against an authorised consent.
+  - name: DomesticScheduledPaymentConsent
+    id: ConsentId
+    api: payment-initiation
+  - name: DomesticStandingOrderConsent
+    id: ConsentId
+    api: payment-initiation
+  - name: InternationalPaymentConsent
+    id: ConsentId
+    api: payment-initiation
+  - name: FilePaymentConsent
+    id: ConsentId
+    api: payment-initiation
+relationships:
+  - from: AccountAccessConsent
+    to: Account
+    type: has_many
+    via: Permissions/consent scope
+  - from: Account
+    to: Balance
+    type: has_many
+    via: AccountId
+  - from: Account
+    to: Transaction
+    type: has_many
+    via: AccountId
+  - from: Account
+    to: Beneficiary
+    type: has_many
+    via: AccountId
+  - from: Account
+    to: StandingOrder
+    type: has_many
+    via: AccountId
+  - from: Account
+    to: DirectDebit
+    type: has_many
+    via: AccountId
+  - from: Account
+    to: ScheduledPayment
+    type: has_many
+    via: AccountId
+  - from: Account
+    to: Statement
+    type: has_many
+    via: AccountId
+  - from: Account
+    to: Party
+    type: has_one
+    via: AccountId
+  - from: Account
+    to: Product
+    type: has_one
+    via: AccountId
+  - from: Statement
+    to: Transaction
+    type: has_many
+    via: StatementId
+  - from: DomesticPayment
+    to: DomesticPaymentConsent
+    type: belongs_to
+    via: ConsentId
+  - from: DomesticPaymentConsent
+    to: Account
+    type: references
+    via: Initiation.DebtorAccount

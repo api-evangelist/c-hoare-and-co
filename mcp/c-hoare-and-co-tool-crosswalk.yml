@@ -1,0 +1,124 @@
+generated: '2026-07-23'
+method: derived
+source: mcp/c-hoare-and-co-mcp.yml, openapi/*.yml
+note: >-
+  Binds each candidate MCP tool (mcp/c-hoare-and-co-mcp.yml) to its backing OBIE
+  OpenAPI operationId(s). The MCP surface here is derived directly from REST, so
+  every tool is REST-bound (no GraphQL, no server-side composites) — confidence is
+  high throughout. Each tool inherits its real inputSchema from the referenced
+  operation's parameters + requestBody (including the OBIE FAPI headers and, for
+  payment writes, x-idempotency-key and x-jws-signature).
+surfaces:
+  openapi:
+    - openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml
+    - openapi/c-hoare-and-co-payment-initiation-api-openapi.yml
+  graphql: null
+  mcp:
+    url: null
+    status: candidate
+    gated: true
+    note: Live tools/list would be FAPI/mTLS-gated; this crosswalk maps by operation, not live introspection.
+crosswalk:
+  - tool: list_accounts
+    category: accounts
+    rest: [GetAccounts]
+    binding: rest
+    confidence: high
+  - tool: get_account
+    category: accounts
+    rest: [GetAccountsAccountId]
+    binding: rest
+    confidence: high
+  - tool: get_account_balances
+    category: accounts
+    rest: [GetAccountsAccountIdBalances]
+    binding: rest
+    confidence: high
+  - tool: get_account_transactions
+    category: transactions
+    rest: [GetAccountsAccountIdTransactions]
+    binding: rest
+    confidence: high
+  - tool: get_account_beneficiaries
+    category: accounts
+    rest: [GetAccountsAccountIdBeneficiaries]
+    binding: rest
+    confidence: high
+  - tool: get_account_standing_orders
+    category: accounts
+    rest: [GetAccountsAccountIdStandingOrders]
+    binding: rest
+    confidence: high
+  - tool: get_account_direct_debits
+    category: accounts
+    rest: [GetAccountsAccountIdDirectDebits]
+    binding: rest
+    confidence: high
+  - tool: get_account_statements
+    category: accounts
+    rest: [GetAccountsAccountIdStatements]
+    binding: rest
+    confidence: high
+  - tool: create_account_access_consent
+    category: consent
+    rest: [CreateAccountAccessConsents]
+    binding: rest
+    confidence: high
+  - tool: get_account_access_consent
+    category: consent
+    rest: [GetAccountAccessConsentsConsentId]
+    binding: rest
+    confidence: high
+  - tool: create_domestic_payment_consent
+    category: payment-consent
+    rest: [CreateDomesticPaymentConsents]
+    binding: rest
+    confidence: high
+  - tool: get_domestic_payment_consent
+    category: payment-consent
+    rest: [GetDomesticPaymentConsentsConsentId]
+    binding: rest
+    confidence: high
+  - tool: get_domestic_payment_consent_funds_confirmation
+    category: payment-consent
+    rest: [GetDomesticPaymentConsentsConsentIdFundsConfirmation]
+    binding: rest
+    confidence: high
+  - tool: create_domestic_payment
+    category: payment
+    rest: [CreateDomesticPayments]
+    binding: rest
+    confidence: high
+    note: Requires x-idempotency-key + x-jws-signature; consent must be authorised via PSU SCA.
+  - tool: get_domestic_payment
+    category: payment
+    rest: [GetDomesticPaymentsDomesticPaymentId]
+    binding: rest
+    confidence: high
+  - tool: create_domestic_scheduled_payment_consent
+    category: payment-consent
+    rest: [CreateDomesticScheduledPaymentConsents]
+    binding: rest
+    confidence: high
+  - tool: create_domestic_standing_order_consent
+    category: payment-consent
+    rest: [CreateDomesticStandingOrderConsents]
+    binding: rest
+    confidence: high
+mcp_only: []
+rest_only:
+  - capability: International payments (consents, execution, funds confirmation, standing orders)
+    operations_sample: [CreateInternationalPayments, CreateInternationalPaymentConsents, CreateInternationalStandingOrders]
+    reason: Not surfaced as candidate MCP tools to keep the tool set focused on domestic flows.
+  - capability: File payments (bulk/batch)
+    operations_sample: [CreateFilePaymentConsents, CreateFilePayments, GetFilePaymentsFilePaymentIdReportFile]
+    reason: Bulk-file flows omitted from the candidate tool set.
+  - capability: Account detail sub-resources (offers, party, product, scheduled-payments, statement files)
+    operations_sample: [GetAccountsAccountIdParty, GetAccountsAccountIdProduct, GetAccountsAccountIdOffers]
+    reason: Long-tail read sub-resources omitted from the candidate tool set.
+coverage:
+  tools_named: 17
+  tools_bound: 17
+  mcp_only: 0
+  rest_ops_total: 62
+  rest_ops_with_tool: 17

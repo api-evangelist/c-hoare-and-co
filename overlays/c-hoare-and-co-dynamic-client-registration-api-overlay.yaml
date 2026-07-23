@@ -1,0 +1,21 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for C. Hoare & Co. Dynamic Client Registration API
+  version: 1.0.0
+extends: openapi/c-hoare-and-co-dynamic-client-registration-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: c-hoare-and-co
+      x-apievangelist-standard: OBIE Read/Write API Specification v3.1
+      x-apievangelist-security-profile: FAPI 1.0 + PSD2 SCA + mutual-TLS
+      x-apievangelist-regulator: FCA-authorised ASPSP (UK Open Banking)
+      x-apievangelist-onboarding: TPP onboarding with OBIE/eIDAS certificates required
+  - target: $.info
+    update:
+      x-apievangelist-artifacts:
+        authentication: authentication/c-hoare-and-co-authentication.yml
+        scopes: scopes/c-hoare-and-co-scopes.yml
+        conventions: conventions/c-hoare-and-co-conventions.yml
+        errors: errors/c-hoare-and-co-problem-types.yml
+        conformance: conformance/c-hoare-and-co-conformance.yml

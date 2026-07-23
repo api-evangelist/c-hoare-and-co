@@ -1,0 +1,94 @@
+generated: '2026-07-23'
+method: derived
+source: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml, openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml
+format: obie-oberrorresponse1
+envelope:
+  schema: OBErrorResponse1
+  media_type: application/json
+  fields:
+    Code: HTTP status code aligned string
+    Id: unique interaction id (echoes x-fapi-interaction-id)
+    Message: high-level, human-readable error description
+    Errors: array of granular errors { ErrorCode, Message, Path, Url }
+note: >-
+  C. Hoare & Co. follows the OBIE Read/Write error model rather than RFC 9457
+  problem+json. Every 4xx/5xx response returns an OBErrorResponse1 envelope whose
+  Errors[].ErrorCode uses the UK.OBIE.* namespace. HTTP-status problems below are
+  derived from the OpenAPI responses; the granular ErrorCode list is the published
+  OBIE v3.1 error-code registry the bank conforms to.
+problems:
+  - status: 400
+    title: Bad Request
+    description: The request is malformed, fails schema validation, or violates a business rule.
+    schema: OBErrorResponse1
+  - status: 401
+    title: Unauthorized
+    description: Missing, invalid, or expired access token, or failed FAPI/mTLS client authentication.
+  - status: 403
+    title: Forbidden
+    description: The token is valid but lacks the consent, scope, or permission for the resource.
+  - status: 404
+    title: Not Found
+    description: The requested resource (account, consent, or payment) does not exist or is not visible to this TPP.
+  - status: 405
+    title: Method Not Allowed
+    description: The HTTP method is not supported for this resource.
+  - status: 406
+    title: Not Acceptable
+    description: The Accept header requests a representation the API cannot produce.
+  - status: 415
+    title: Unsupported Media Type
+    description: The request Content-Type is not application/json (or the expected media type).
+  - status: 429
+    title: Too Many Requests
+    description: The TPP has exceeded the permitted request/polling rate for the resource.
+  - status: 500
+    title: Internal Server Error
+    description: An unexpected error occurred at the ASPSP; retry per OBIE operational guidance.
+  - status: 201
+    title: Created (payment/consent)
+    description: Successful creation of a consent or payment order resource (not an error; listed for completeness).
+error_codes:
+  namespace: UK.OBIE.*
+  reference: https://openbankinguk.github.io/read-write-api-site3/v3.1/profiles/read-write-data-api-profile.html
+  codes:
+    - code: UK.OBIE.Field.Invalid
+      meaning: A field failed validation (format, value, or range).
+    - code: UK.OBIE.Field.Missing
+      meaning: A required field was not supplied.
+    - code: UK.OBIE.Field.Unexpected
+      meaning: An unexpected field was supplied in the request.
+    - code: UK.OBIE.Field.InvalidDate
+      meaning: A date field is invalid or out of an acceptable range.
+    - code: UK.OBIE.Header.Invalid
+      meaning: A required header (e.g. x-fapi-interaction-id, x-idempotency-key) is invalid.
+    - code: UK.OBIE.Header.Missing
+      meaning: A required header was not supplied.
+    - code: UK.OBIE.Resource.NotFound
+      meaning: The referenced resource does not exist.
+    - code: UK.OBIE.Resource.InvalidConsentStatus
+      meaning: The consent is not in a state that permits the requested operation.
+    - code: UK.OBIE.Resource.InvalidFormat
+      meaning: The resource representation is in an invalid format.
+    - code: UK.OBIE.Resource.ConsentMismatch
+      meaning: The resource does not match the granted consent.
+    - code: UK.OBIE.Rules.AfterCutOffDateTime
+      meaning: The payment was received after the cut-off time for its payment scheme.
+    - code: UK.OBIE.Rules.DuplicateReference
+      meaning: A duplicate payment reference / idempotency conflict was detected.
+    - code: UK.OBIE.Signature.Invalid
+      meaning: The x-jws-signature could not be validated.
+    - code: UK.OBIE.Signature.Missing
+      meaning: A required x-jws-signature header was not supplied.
+    - code: UK.OBIE.Signature.MissingClaim
+      meaning: A required claim is missing from the JWS signature.
+    - code: UK.OBIE.Signature.Malformed
+      meaning: The JWS signature is malformed.
+    - code: UK.OBIE.Unsupported.AccountIdentifier
+      meaning: The supplied account identifier scheme is not supported.
+    - code: UK.OBIE.Unsupported.Currency
+      meaning: The requested currency is not supported.
+    - code: UK.OBIE.Unsupported.Frequency
+      meaning: The requested standing-order frequency is not supported.
+    - code: UK.OBIE.UnexpectedError
+      meaning: An unexpected error occurred processing the request.

@@ -1,0 +1,38 @@
+generated: '2026-07-23'
+method: derived
+source: openapi/*.yml + developer.hoaresbank.co.uk portal metadata
+versioning:
+  scheme: uri-path
+  current: v3.1
+  standard: OBIE Read/Write API Specification v3.1
+  apis:
+    - name: Account and Transaction Information API
+      version: v3.1.0
+      path: /open-banking/v3.1/aisp
+    - name: Payment Initiation API
+      version: v3.1.0
+      path: /open-banking/v3.1/pisp
+    - name: Dynamic Client Registration API
+      version: v3.1-RC1
+      path: /open-banking/v3.1
+  note: >-
+    Versioning follows the OBIE Read/Write release train (major.minor in the URI
+    path). New OBIE minor versions are onboarded by the ASPSP and published as new
+    portal API definitions rather than by mutating an existing version.
+deprecation:
+  policy_documented: false
+  sunset_header: false
+  note: >-
+    No standalone deprecation-policy page is published; OBIE version retirement
+    follows the Open Banking standard's release lifecycle and TPP onboarding
+    communications on the developer portal.
+sla:
+  documented: false
+  note: Operational availability and performance are governed by PSD2 / OBIE operational guidelines rather than a published public SLA.
+status_page:
+  present: false
+  note: >-
+    No public status page was found (developer.hoaresbank.co.uk is a Kong Konnect
+    developer portal without a separate status subdomain). OBIE operational
+    performance is reported to the OBIE Directory rather than a public status page.
+deprecated_operations: []

@@ -2,20 +2,17 @@ aid: c-hoare-and-co
 url: https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/apis.yml
 name: C. Hoare & Co.
 kind: company
-description: C. Hoare & Co. (Hoares Bank) is the United Kingdom's oldest privately-owned
-  bank, founded in 1672 by Sir Richard Hoare and owned continuously by the Hoare family
-  for twelve generations, operating a bespoke private banking, lending, and wealth
-  business from Fleet Street in London and an office in Cambridge. It is an FCA-authorised
-  ASPSP (Account Servicing Payment Service Provider) and a regulated participant in
-  UK Open Banking under PSD2. As a private bank it is not one of the CMA9 mandated
-  institutions, so it does not publish the unauthenticated Open Data (ATM / branch /
-  product) reference APIs; instead it exposes the OBIE Read/Write standard through a
-  MuleSoft Anypoint developer portal at developer.hoaresbank.co.uk, publishing Account
-  and Transaction Information (AIS), Payment Initiation (PIS), and Dynamic Client
-  Registration conformant to the Open Banking Implementation Entity (OBIE) v3.1
-  standard. Production access is FAPI-secured with OAuth2/OIDC, PSD2 strong customer
-  authentication, and mutual-TLS client authentication using OBIE/eIDAS certificates
-  after third-party provider onboarding.
+description: C. Hoare & Co. (Hoares Bank) is the United Kingdom's oldest privately-owned bank, founded
+  in 1672 by Sir Richard Hoare and owned continuously by the Hoare family for twelve generations, operating
+  a bespoke private banking, lending, and wealth business from Fleet Street in London and an office in
+  Cambridge. It is an FCA-authorised ASPSP (Account Servicing Payment Service Provider) and a regulated
+  participant in UK Open Banking under PSD2. As a private bank it is not one of the CMA9 mandated institutions,
+  so it does not publish the unauthenticated Open Data (ATM / branch / product) reference APIs; instead
+  it exposes the OBIE Read/Write standard through a MuleSoft Anypoint developer portal at developer.hoaresbank.co.uk,
+  publishing Account and Transaction Information (AIS), Payment Initiation (PIS), and Dynamic Client Registration
+  conformant to the Open Banking Implementation Entity (OBIE) v3.1 standard. Production access is FAPI-secured
+  with OAuth2/OIDC, PSD2 strong customer authentication, and mutual-TLS client authentication using OBIE/eIDAS
+  certificates after third-party provider onboarding.
 accessModel:
   pricing: unknown
   onboarding: partner
@@ -46,10 +43,9 @@ specificationVersion: '0.19'
 apis:
 - aid: c-hoare-and-co:c-hoare-and-co-account-and-transaction-api
   name: C. Hoare & Co. Account and Transaction Information API
-  description: OBIE Read/Write Account & Transaction Information (AIS) API — lets
-    onboarded, consented AISP third-party providers retrieve C. Hoare & Co. account,
-    balance, transaction, beneficiary, standing order, direct debit, product, and
-    party data. Conformant to the OBIE v3.1 Read/Write standard; FAPI-secured
+  description: OBIE Read/Write Account & Transaction Information (AIS) API — lets onboarded, consented
+    AISP third-party providers retrieve C. Hoare & Co. account, balance, transaction, beneficiary, standing
+    order, direct debit, product, and party data. Conformant to the OBIE v3.1 Read/Write standard; FAPI-secured
     (OAuth2/OIDC + PSD2 SCA + mTLS).
   humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
   baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
@@ -67,12 +63,13 @@ apis:
     url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
   - type: Documentation
     url: https://www.hoaresbank.co.uk/open-banking
+  - type: Overlay
+    url: overlays/c-hoare-and-co-account-and-transaction-api-overlay.yaml
 - aid: c-hoare-and-co:c-hoare-and-co-payment-initiation-api
   name: C. Hoare & Co. Payment Initiation API
-  description: OBIE Read/Write Payment Initiation (PIS) API — lets onboarded,
-    consented PISP third-party providers initiate domestic and scheduled payments
-    and standing orders and retrieve payment/consent status on behalf of C. Hoare &
-    Co. customers. Conformant to the OBIE v3.1 Read/Write standard; FAPI-secured
+  description: OBIE Read/Write Payment Initiation (PIS) API — lets onboarded, consented PISP third-party
+    providers initiate domestic and scheduled payments and standing orders and retrieve payment/consent
+    status on behalf of C. Hoare & Co. customers. Conformant to the OBIE v3.1 Read/Write standard; FAPI-secured
     (OAuth2/OIDC + PSD2 SCA + mTLS).
   humanURL: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
   baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/pisp
@@ -90,12 +87,13 @@ apis:
     url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
   - type: Documentation
     url: https://www.hoaresbank.co.uk/open-banking
+  - type: Overlay
+    url: overlays/c-hoare-and-co-payment-initiation-api-overlay.yaml
 - aid: c-hoare-and-co:c-hoare-and-co-dynamic-client-registration-api
   name: C. Hoare & Co. Dynamic Client Registration API
-  description: OBIE Dynamic Client Registration (DCR) proxy — lets third-party
-    providers submit a signed Software Statement Assertion to register an OAuth2
-    client with C. Hoare & Co. as part of TPP onboarding. Published on the developer
-    portal as v3.1-RC1; the harvested contract is the shared OBIE client-registration
+  description: OBIE Dynamic Client Registration (DCR) proxy — lets third-party providers submit a signed
+    Software Statement Assertion to register an OAuth2 client with C. Hoare & Co. as part of TPP onboarding.
+    Published on the developer portal as v3.1-RC1; the harvested contract is the shared OBIE client-registration
     standard.
   humanURL: https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
   baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1
@@ -111,7 +109,17 @@ apis:
     url: https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
   - type: APIReference
     url: https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: Overlay
+    url: overlays/c-hoare-and-co-dynamic-client-registration-api-overlay.yaml
 common:
+- type: DomainSecurity
+  url: security/c-hoare-and-co-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/c-hoare-and-co-agentic-access.yml
+- type: OAuthScopes
+  url: scopes/c-hoare-and-co-scopes.yml
+- type: Authentication
+  url: authentication/c-hoare-and-co-authentication.yml
 - type: Website
   url: https://www.hoaresbank.co.uk/
 - type: DeveloperPortal
@@ -136,6 +144,26 @@ common:
   url: https://www.openbanking.org.uk/regulated-providers/c-hoare-co-2/
 - type: LinkedIn
   url: https://uk.linkedin.com/company/c-hoare-&-co
+- type: Conventions
+  url: conventions/c-hoare-and-co-conventions.yml
+- type: Idempotency
+  url: conventions/c-hoare-and-co-conventions.yml
+- type: ErrorCatalog
+  url: errors/c-hoare-and-co-problem-types.yml
+- type: Conformance
+  url: conformance/c-hoare-and-co-conformance.yml
+- type: Lifecycle
+  url: lifecycle/c-hoare-and-co-lifecycle.yml
+- type: LLMsTxt
+  url: llms/c-hoare-and-co-llms.txt
+- type: DataModel
+  url: data-model/c-hoare-and-co-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/c-hoare-and-co-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/c-hoare-and-co-tool-crosswalk.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

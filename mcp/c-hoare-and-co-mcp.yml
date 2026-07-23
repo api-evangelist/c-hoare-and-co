@@ -1,0 +1,66 @@
+generated: '2026-07-23'
+method: derived
+status: candidate
+source: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml, openapi/c-hoare-and-co-payment-initiation-api-openapi.yml
+note: >-
+  No official hosted MCP server is published by C. Hoare & Co. This is a CANDIDATE
+  tool surface derived from the OBIE Read/Write OpenAPI operations, showing how the
+  bank's AIS/PIS capabilities would map to Model Context Protocol tools. Any real
+  deployment would inherit the FAPI/OAuth2 + PSD2 SCA + mTLS + JWS constraints of
+  the underlying APIs; write tools are consent- and idempotency-gated.
+server:
+  name: c-hoare-and-co
+  transport: http
+  url: null
+tools:
+  - name: list_accounts
+    description: List the customer's accounts the TPP is consented to access.
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#GetAccounts
+  - name: get_account
+    description: Retrieve a single account by AccountId.
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#GetAccountsAccountId
+  - name: get_account_balances
+    description: Retrieve balances for an account.
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#GetAccountsAccountIdBalances
+  - name: get_account_transactions
+    description: Retrieve transactions for an account, optionally date-range filtered.
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#GetAccountsAccountIdTransactions
+  - name: get_account_beneficiaries
+    description: Retrieve beneficiaries for an account.
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#GetAccountsAccountIdBeneficiaries
+  - name: get_account_standing_orders
+    description: Retrieve standing orders for an account.
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#GetAccountsAccountIdStandingOrders
+  - name: get_account_direct_debits
+    description: Retrieve direct debits for an account.
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#GetAccountsAccountIdDirectDebits
+  - name: get_account_statements
+    description: Retrieve statements for an account.
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#GetAccountsAccountIdStatements
+  - name: create_account_access_consent
+    description: Create an account-access consent for AIS access (requires PSU authorisation).
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#CreateAccountAccessConsents
+  - name: get_account_access_consent
+    description: Retrieve the status of an account-access consent.
+    source_operation: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml#GetAccountAccessConsentsConsentId
+  - name: create_domestic_payment_consent
+    description: Create a domestic payment consent (PISP). Requires PSU SCA to authorise.
+    source_operation: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml#CreateDomesticPaymentConsents
+  - name: get_domestic_payment_consent
+    description: Retrieve the status of a domestic payment consent.
+    source_operation: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml#GetDomesticPaymentConsentsConsentId
+  - name: get_domestic_payment_consent_funds_confirmation
+    description: Confirm funds availability for a domestic payment consent.
+    source_operation: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml#GetDomesticPaymentConsentsConsentIdFundsConfirmation
+  - name: create_domestic_payment
+    description: Execute a domestic payment against an authorised consent. Requires x-idempotency-key and x-jws-signature.
+    source_operation: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml#CreateDomesticPayments
+  - name: get_domestic_payment
+    description: Retrieve the status of a submitted domestic payment.
+    source_operation: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml#GetDomesticPaymentsDomesticPaymentId
+  - name: create_domestic_scheduled_payment_consent
+    description: Create a domestic scheduled-payment consent.
+    source_operation: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml#CreateDomesticScheduledPaymentConsents
+  - name: create_domestic_standing_order_consent
+    description: Create a domestic standing-order consent.
+    source_operation: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml#CreateDomesticStandingOrderConsents

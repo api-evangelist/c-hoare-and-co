@@ -1,0 +1,87 @@
+generated: '2026-07-23'
+method: derived
+source: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml, openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml
+summary: >-
+  Cross-cutting request/response semantics for C. Hoare & Co.'s OBIE Read/Write
+  Open Banking APIs. The bank implements the UK Open Banking Implementation Entity
+  (OBIE) v3.1 standard, so its conventions are the OBIE conventions: FAPI-secured
+  OAuth2/OIDC with PSD2 strong customer authentication and mutual-TLS, per-request
+  interaction tracing, idempotent payment writes, and detached JWS request signing.
+authentication:
+  style: oauth2
+  models:
+    - name: TPPOAuth2Security
+      flow: clientCredentials
+      note: Client-credentials token for TPP-only resources (consents, DCR, funds confirmation).
+    - name: PSUOAuth2Security
+      flow: authorizationCode
+      note: Authorization-code + PSD2 SCA token for PSU-authorised resource access (accounts, payment execution).
+  transport_security: mutual-TLS (OBIE/eIDAS transport certificates)
+  ref: authentication/c-hoare-and-co-authentication.yml
+idempotency:
+  supported: true
+  header: x-idempotency-key
+  scope: payment and consent write operations (POST) on the Payment Initiation API
+  max_length: 40
+  semantics: >-
+    A TPP must set a unique x-idempotency-key on payment-order and file-payment
+    POST requests; replaying the same key with an identical request body returns
+    the original result rather than creating a duplicate payment. Per OBIE, keys
+    are retained for a minimum of 24 hours.
+  evidence: 18 x-idempotency-key header parameters across POST operations in the Payment Initiation API spec
+request_signing:
+  header: x-jws-signature
+  mechanism: detached JWS (JSON Web Signature) over the request body
+  scope: payment-order and consent write operations
+  note: OBIE message-signing requirement for non-repudiation on Payment Initiation.
+tracing:
+  request_id_header: x-fapi-interaction-id
+  echoed_in_response: true
+  additional_fapi_headers:
+    - x-fapi-auth-date
+    - x-fapi-customer-ip-address
+    - x-customer-user-agent
+  note: FAPI interaction-id correlates a request/response pair end-to-end for support and audit.
+pagination:
+  style: cursor-links
+  response_fields:
+    - Links.Self
+    - Links.First
+    - Links.Prev
+    - Links.Next
+    - Links.Last
+  meta_fields:
+    - Meta.TotalPages
+    - Meta.FirstAvailableDateTime
+    - Meta.LastAvailableDateTime
+  note: OBIE bulk-resource responses carry an ISO 8601 Links block and a Meta block for paging bulk transaction/statement data.
+filtering:
+  transaction_query_params:
+    - fromBookingDateTime
+    - toBookingDateTime
+  note: Transaction and statement endpoints support ISO 8601 date-range filtering.
+versioning:
+  scheme: uri-path
+  current: v3.1
+  standard: OBIE Read/Write API Specification v3.1
+  ref: lifecycle/c-hoare-and-co-lifecycle.yml
+error_envelope:
+  schema: OBErrorResponse1
+  media_type: application/json
+  shape:
+    Code: HTTP-status-aligned string
+    Id: interaction id
+    Message: high-level message
+    Errors: array of { ErrorCode (UK.OBIE.* namespace), Message, Path, Url }
+  ref: errors/c-hoare-and-co-problem-types.yml
+rate_limit_signaling:
+  documented: false
+  note: >-
+    The harvested OBIE specs declare a 429 Too Many Requests response on every
+    operation but do not standardise RateLimit-* response headers; polling cadence
+    is governed by the OBIE operational guidelines rather than in-spec headers.
+crosslinks:
+  errors: errors/c-hoare-and-co-problem-types.yml
+  authentication: authentication/c-hoare-and-co-authentication.yml
+  scopes: scopes/c-hoare-and-co-scopes.yml
+  lifecycle: lifecycle/c-hoare-and-co-lifecycle.yml

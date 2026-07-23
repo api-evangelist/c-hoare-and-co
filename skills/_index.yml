@@ -1,0 +1,12 @@
+generated: '2026-07-23'
+method: generated
+source: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml, openapi/c-hoare-and-co-payment-initiation-api-openapi.yml
+skills:
+  - file: c-hoare-and-co-retrieve-account-information.md
+    name: Retrieve C. Hoare & Co. account information (AIS)
+    api: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml
+    operations: [CreateAccountAccessConsents, GetAccountAccessConsentsConsentId, GetAccounts, GetAccountsAccountId, GetAccountsAccountIdBalances, GetAccountsAccountIdTransactions]
+  - file: c-hoare-and-co-initiate-domestic-payment.md
+    name: Initiate a C. Hoare & Co. domestic payment (PIS)
+    api: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml
+    operations: [CreateDomesticPaymentConsents, GetDomesticPaymentConsentsConsentId, GetDomesticPaymentConsentsConsentIdFundsConfirmation, CreateDomesticPayments, GetDomesticPaymentsDomesticPaymentId]

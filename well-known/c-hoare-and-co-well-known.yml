@@ -1,0 +1,41 @@
+generated: '2026-07-23'
+method: searched
+note: >-
+  No anonymously-fetchable machine-readable .well-known documents were found. The
+  developer portal (developer.hoaresbank.co.uk) is a Kong Konnect single-page app
+  that returns a 200 HTML shell for every /.well-known/* path (openid-configuration,
+  oauth-authorization-server, security.txt, api-catalog) — none parse as JSON/text,
+  so none were saved verbatim. The API host (api.hoaresbank.co.uk) does not respond
+  to anonymous requests (connection refused / mTLS-gated). The real OBIE OIDC
+  discovery + auth-server metadata sit behind the FAPI/mTLS-gated authorization
+  server issued to onboarded TPPs.
+hosts:
+  - host: https://developer.hoaresbank.co.uk
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        result: html-shell
+        saved: false
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        result: html-shell
+        saved: false
+      - path: /.well-known/security.txt
+        status: 200
+        result: html-shell
+        saved: false
+      - path: /.well-known/api-catalog
+        status: 200
+        result: html-shell
+        saved: false
+  - host: https://api.hoaresbank.co.uk
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 000
+        result: connection-refused (mTLS-gated)
+        saved: false
+  - host: https://www.hoaresbank.co.uk
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        saved: false

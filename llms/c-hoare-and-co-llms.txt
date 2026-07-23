@@ -1,0 +1,31 @@
+# C. Hoare & Co.
+
+> C. Hoare & Co. (Hoare's Bank) is the United Kingdom's oldest privately-owned bank, founded in 1672 and owned by the Hoare family for twelve generations. It is an FCA-authorised ASPSP and regulated UK Open Banking (PSD2) participant, exposing the OBIE v3.1 Read/Write standard — Account & Transaction Information (AIS), Payment Initiation (PIS), and Dynamic Client Registration — through a developer portal at developer.hoaresbank.co.uk. Production access is FAPI-secured with OAuth2/OIDC, PSD2 strong customer authentication, and mutual-TLS using OBIE/eIDAS certificates after third-party provider (TPP) onboarding.
+
+## APIs
+
+- [Account and Transaction Information API](https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs): OBIE Read/Write AIS — retrieve accounts, balances, transactions, beneficiaries, standing orders, direct debits, statements, products, and party data for consented accounts.
+- [Payment Initiation API](https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs): OBIE Read/Write PIS — initiate domestic, scheduled, standing-order, file, and international payments on behalf of consented customers.
+- [Dynamic Client Registration API](https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs): OBIE DCR proxy — register an OAuth2 client via a signed Software Statement Assertion during TPP onboarding.
+
+## Specs
+
+- [Account & Transaction OpenAPI](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml)
+- [Payment Initiation OpenAPI](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/openapi/c-hoare-and-co-payment-initiation-api-openapi.yml)
+- [Dynamic Client Registration OpenAPI](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/openapi/c-hoare-and-co-dynamic-client-registration-api-openapi.yml)
+
+## Artifacts
+
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/authentication/c-hoare-and-co-authentication.yml): OAuth2 (authorizationCode + clientCredentials), PSD2 SCA, mTLS.
+- [OAuth scopes](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/scopes/c-hoare-and-co-scopes.yml): accounts, payments.
+- [API conventions](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/conventions/c-hoare-and-co-conventions.yml): idempotency (x-idempotency-key), FAPI tracing, JWS signing, pagination.
+- [Error catalog](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/errors/c-hoare-and-co-problem-types.yml): OBErrorResponse1 envelope + UK.OBIE.* error codes.
+- [Conformance](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/conformance/c-hoare-and-co-conformance.yml): OBIE 3.1, PSD2, FAPI, OAuth2, OIDC, mTLS, DCR.
+- [Agent skills](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/skills/_index.yml)
+
+## Docs
+
+- [Developer Portal](https://developer.hoaresbank.co.uk/)
+- [Open Banking overview](https://www.hoaresbank.co.uk/open-banking)
+- [FCA register entry](https://register.fca.org.uk/s/firm?id=001b000000MfFMxAAN)
+- [Open Banking regulated-provider listing](https://www.openbanking.org.uk/regulated-providers/c-hoare-co-2/)
