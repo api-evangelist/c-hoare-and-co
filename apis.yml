@@ -39,7 +39,7 @@ tags:
 - Account Information
 created: '2026-07-23'
 modified: '2026-07-23'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: c-hoare-and-co:c-hoare-and-co-account-and-transaction-api
   name: C. Hoare & Co. Account and Transaction Information API
