@@ -1,0 +1,1870 @@
+{
+  "item": [
+    {
+      "id": "74d34854-99d0-489d-b74a-51bf9c05297b",
+      "name": "Client Registration",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "29ace2f2-5e73-4687-8b39-2f5db2aeb98c",
+          "name": "Register a client by way of a Software Statement Assertion",
+          "request": {
+            "name": "Register a client by way of a Software Statement Assertion",
+            "description": {
+              "content": "Endpoint will be secured by way of Mutual Authentication over TLS",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<OBClientRegistration1>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bfc5e7b5-7169-4e7f-b128-ca68e213e971",
+              "name": "Client registration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"application_type\": \"web\",\n  \"client_id\": \"string\",\n  \"grant_types\": [\n    \"client_credentials\"\n  ],\n  \"id_token_signed_response_alg\": \"PS256\",\n  \"redirect_uris\": [\n    \"http://t.exyqXyROCL6g+ZBG05cXULmQ-01QDkbZF7+sHKgdg6RNjDrd3e4MR-PVP.qk37iDrVZq\",\n    \"https://erZPUcybhHSlgVYhsFtxXcoFKChPu.atrkx2Y2Z0RLOFUYYP-FJ4oSnQVgI\"\n  ],\n  \"request_object_signing_alg\": \"PS256\",\n  \"software_statement\": \"string\",\n  \"tls_client_auth_dn\": \"string\",\n  \"token_endpoint_auth_method\": \"tls_client_auth\",\n  \"client_secret\": \"string\",\n  \"client_id_issued_at\": 651,\n  \"client_secret_expires_at\": 1336,\n  \"response_types\": [\n    \"code\",\n    \"code\"\n  ],\n  \"software_id\": \"string\",\n  \"scope\": [\n    \"string\",\n    \"string\"\n  ],\n  \"token_endpoint_auth_signing_alg\": \"PS256\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2f0b51d-4475-49bf-a141-23b73385dd9f",
+              "name": "Request failed due to client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_redirect_uri\",\n  \"error_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "173c7f99-6b90-4f2e-8e87-8dc28b5776f1",
+          "name": "Get a client by way of Client ID",
+          "request": {
+            "name": "Get a client by way of Client ID",
+            "description": {},
+            "url": {
+              "path": [
+                "register",
+                ":ClientId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ClientId",
+                  "description": "(Required) The client ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://authserver.example/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "41cc4aa4-647f-4963-a76e-c5764c94c65a",
+              "name": "Client registration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"application_type\": \"web\",\n  \"client_id\": \"string\",\n  \"grant_types\": [\n    \"client_credentials\"\n  ],\n  \"id_token_signed_response_alg\": \"PS256\",\n  \"redirect_uris\": [\n    \"http://t.exyqXyROCL6g+ZBG05cXULmQ-01QDkbZF7+sHKgdg6RNjDrd3e4MR-PVP.qk37iDrVZq\",\n    \"https://erZPUcybhHSlgVYhsFtxXcoFKChPu.atrkx2Y2Z0RLOFUYYP-FJ4oSnQVgI\"\n  ],\n  \"request_object_signing_alg\": \"PS256\",\n  \"software_statement\": \"string\",\n  \"tls_client_auth_dn\": \"string\",\n  \"token_endpoint_auth_method\": \"tls_client_auth\",\n  \"client_secret\": \"string\",\n  \"client_id_issued_at\": 651,\n  \"client_secret_expires_at\": 1336,\n  \"response_types\": [\n    \"code\",\n    \"code\"\n  ],\n  \"software_id\": \"string\",\n  \"scope\": [\n    \"string\",\n    \"string\"\n  ],\n  \"token_endpoint_auth_signing_alg\": \"PS256\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12bb8cc5-d250-4820-87ca-9058c9040969",
+              "name": "Request failed due to unknown or invalid Client or invalid access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Response header field specified in https://tools.ietf.org/html/rfc6750",
+                  "key": "WWW-Authenticate",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6daefa31-539b-48fb-b77e-f695db8c41d8",
+              "name": "The client does not have permission to read, update or delete the Client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91a6dcb1-1901-4c0c-af8f-e7eb705963fe",
+          "name": "Update a client by way of Client ID",
+          "request": {
+            "name": "Update a client by way of Client ID",
+            "description": {},
+            "url": {
+              "path": [
+                "register",
+                ":ClientId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ClientId",
+                  "description": "(Required) The client ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://authserver.example/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<OBClientRegistration1>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "59ff2739-10bd-4533-a09a-ffaa4faa0474",
+              "name": "Client registration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"application_type\": \"web\",\n  \"client_id\": \"string\",\n  \"grant_types\": [\n    \"client_credentials\"\n  ],\n  \"id_token_signed_response_alg\": \"PS256\",\n  \"redirect_uris\": [\n    \"http://t.exyqXyROCL6g+ZBG05cXULmQ-01QDkbZF7+sHKgdg6RNjDrd3e4MR-PVP.qk37iDrVZq\",\n    \"https://erZPUcybhHSlgVYhsFtxXcoFKChPu.atrkx2Y2Z0RLOFUYYP-FJ4oSnQVgI\"\n  ],\n  \"request_object_signing_alg\": \"PS256\",\n  \"software_statement\": \"string\",\n  \"tls_client_auth_dn\": \"string\",\n  \"token_endpoint_auth_method\": \"tls_client_auth\",\n  \"client_secret\": \"string\",\n  \"client_id_issued_at\": 651,\n  \"client_secret_expires_at\": 1336,\n  \"response_types\": [\n    \"code\",\n    \"code\"\n  ],\n  \"software_id\": \"string\",\n  \"scope\": [\n    \"string\",\n    \"string\"\n  ],\n  \"token_endpoint_auth_signing_alg\": \"PS256\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccb7f84f-1864-433f-8604-fb49243796ce",
+              "name": "Request failed due to client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_redirect_uri\",\n  \"error_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd4e2e6d-d877-4400-8154-519f0afd2ad1",
+              "name": "Request failed due to unknown or invalid Client or invalid access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Response header field specified in https://tools.ietf.org/html/rfc6750",
+                  "key": "WWW-Authenticate",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "79a0a953-f892-4bde-bace-b1218f90eda8",
+              "name": "The client does not have permission to read, update or delete the Client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed281543-dce2-45ed-8a24-3c721580d2e6",
+          "name": "Delete a client by way of Client ID",
+          "request": {
+            "name": "Delete a client by way of Client ID",
+            "description": {},
+            "url": {
+              "path": [
+                "register",
+                ":ClientId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ClientId",
+                  "description": "(Required) The client ID"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://authserver.example/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "90b7e744-5f8a-486d-b67b-452ed1491cd2",
+              "name": "Client deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "51767c60-9c66-40a6-b959-a2c5c7dc2688",
+              "name": "Request failed due to unknown or invalid Client or invalid access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Response header field specified in https://tools.ietf.org/html/rfc6750",
+                  "key": "WWW-Authenticate",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a20201a2-68e4-4c83-b74a-a380ff5d9487",
+              "name": "The client does not have permission to read, update or delete the Client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1aec61c2-890b-4cc4-aef6-156a721806e4",
+              "name": "The client does not have permission to read, update or delete the Client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "35db711b-9c0d-4401-b4e6-ff388ecb9686",
+      "name": "Conditional",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2879db71-4319-4cec-ab51-4febaf2c2cd7",
+          "name": "Register a client by way of a Software Statement Assertion",
+          "request": {
+            "name": "Register a client by way of a Software Statement Assertion",
+            "description": {
+              "content": "Endpoint will be secured by way of Mutual Authentication over TLS",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<OBClientRegistration1>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5de7e955-e819-456b-b957-4ef6b75d0e1c",
+              "name": "Client registration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"application_type\": \"web\",\n  \"client_id\": \"string\",\n  \"grant_types\": [\n    \"client_credentials\"\n  ],\n  \"id_token_signed_response_alg\": \"PS256\",\n  \"redirect_uris\": [\n    \"http://t.exyqXyROCL6g+ZBG05cXULmQ-01QDkbZF7+sHKgdg6RNjDrd3e4MR-PVP.qk37iDrVZq\",\n    \"https://erZPUcybhHSlgVYhsFtxXcoFKChPu.atrkx2Y2Z0RLOFUYYP-FJ4oSnQVgI\"\n  ],\n  \"request_object_signing_alg\": \"PS256\",\n  \"software_statement\": \"string\",\n  \"tls_client_auth_dn\": \"string\",\n  \"token_endpoint_auth_method\": \"tls_client_auth\",\n  \"client_secret\": \"string\",\n  \"client_id_issued_at\": 651,\n  \"client_secret_expires_at\": 1336,\n  \"response_types\": [\n    \"code\",\n    \"code\"\n  ],\n  \"software_id\": \"string\",\n  \"scope\": [\n    \"string\",\n    \"string\"\n  ],\n  \"token_endpoint_auth_signing_alg\": \"PS256\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ac2180b-39c9-411a-b32f-5888d1097940",
+              "name": "Request failed due to client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_redirect_uri\",\n  \"error_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "62730a12-ee87-4e0b-8018-1866da72c776",
+      "name": "Optional",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1a2207fc-e7dc-4c05-b16e-7fb588060886",
+          "name": "Get a client by way of Client ID",
+          "request": {
+            "name": "Get a client by way of Client ID",
+            "description": {},
+            "url": {
+              "path": [
+                "register",
+                ":ClientId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ClientId",
+                  "description": "(Required) The client ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://authserver.example/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "70d20c0e-20fa-4e4a-8d0c-c2cc51178cbe",
+              "name": "Client registration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"application_type\": \"web\",\n  \"client_id\": \"string\",\n  \"grant_types\": [\n    \"authorization_code\"\n  ],\n  \"id_token_signed_response_alg\": \"ES256\",\n  \"redirect_uris\": [\n    \"http://Fz.bpTZDw7rbze7APsWyrm\",\n    \"https://EkdsvdxeuXLFbZX.odiNdW++6f+,qrybSPDRQeHGNsYh-iu47p\"\n  ],\n  \"request_object_signing_alg\": \"PS256\",\n  \"software_statement\": \"string\",\n  \"tls_client_auth_dn\": \"string\",\n  \"token_endpoint_auth_method\": \"tls_client_auth\",\n  \"client_secret\": \"string\",\n  \"client_id_issued_at\": 6695,\n  \"client_secret_expires_at\": 4257,\n  \"response_types\": [\n    \"code id_token\",\n    \"code\"\n  ],\n  \"software_id\": \"string\",\n  \"scope\": [\n    \"string\",\n    \"stri\"\n  ],\n  \"token_endpoint_auth_signing_alg\": \"RS256\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f2db935-844e-4662-95d7-8ffe3cd73733",
+              "name": "Request failed due to unknown or invalid Client or invalid access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Response header field specified in https://tools.ietf.org/html/rfc6750",
+                  "key": "WWW-Authenticate",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "911764bd-35bb-48fb-8c7e-eed7bbec85d8",
+              "name": "The client does not have permission to read, update or delete the Client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca0b3672-0b3d-474e-81c1-c61750733e68",
+          "name": "Update a client by way of Client ID",
+          "request": {
+            "name": "Update a client by way of Client ID",
+            "description": {},
+            "url": {
+              "path": [
+                "register",
+                ":ClientId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ClientId",
+                  "description": "(Required) The client ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://authserver.example/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<OBClientRegistration1>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cca01b4d-e475-4049-8e4f-9bb037637671",
+              "name": "Client registration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"application_type\": \"web\",\n  \"client_id\": \"string\",\n  \"grant_types\": [\n    \"client_credentials\"\n  ],\n  \"id_token_signed_response_alg\": \"PS256\",\n  \"redirect_uris\": [\n    \"http://t.exyqXyROCL6g+ZBG05cXULmQ-01QDkbZF7+sHKgdg6RNjDrd3e4MR-PVP.qk37iDrVZq\",\n    \"https://erZPUcybhHSlgVYhsFtxXcoFKChPu.atrkx2Y2Z0RLOFUYYP-FJ4oSnQVgI\"\n  ],\n  \"request_object_signing_alg\": \"PS256\",\n  \"software_statement\": \"string\",\n  \"tls_client_auth_dn\": \"string\",\n  \"token_endpoint_auth_method\": \"tls_client_auth\",\n  \"client_secret\": \"string\",\n  \"client_id_issued_at\": 651,\n  \"client_secret_expires_at\": 1336,\n  \"response_types\": [\n    \"code\",\n    \"code\"\n  ],\n  \"software_id\": \"string\",\n  \"scope\": [\n    \"string\",\n    \"string\"\n  ],\n  \"token_endpoint_auth_signing_alg\": \"PS256\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f64132e9-9f13-4fd8-9f12-c1f7801dbb98",
+              "name": "Request failed due to client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_redirect_uri\",\n  \"error_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f44888f0-b940-416a-88f2-211787201eaa",
+              "name": "Request failed due to unknown or invalid Client or invalid access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Response header field specified in https://tools.ietf.org/html/rfc6750",
+                  "key": "WWW-Authenticate",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "28441e11-eb22-45c3-9390-1ea1aa6c905d",
+              "name": "The client does not have permission to read, update or delete the Client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7af4906-1f8b-4e24-af89-abbbca67df5a",
+          "name": "Delete a client by way of Client ID",
+          "request": {
+            "name": "Delete a client by way of Client ID",
+            "description": {},
+            "url": {
+              "path": [
+                "register",
+                ":ClientId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ClientId",
+                  "description": "(Required) The client ID"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://authserver.example/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2732c210-edd9-4551-8ba8-51a183a58d8e",
+              "name": "Client deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "acd14d35-0334-4994-a3e4-99626165fa61",
+              "name": "Request failed due to unknown or invalid Client or invalid access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Response header field specified in https://tools.ietf.org/html/rfc6750",
+                  "key": "WWW-Authenticate",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ffa1bdeb-89f8-4706-8392-33d114b4d3ef",
+              "name": "The client does not have permission to read, update or delete the Client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9e4eabfc-4101-41a7-902f-510e884bc9f5",
+              "name": "The client does not have permission to read, update or delete the Client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "register",
+                    ":ClientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ClientId",
+                      "description": "(Required) The client ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7dd9f8e4-ec24-4344-ad84-ec7ba32982fb",
+    "name": "Dynamic Client Registration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This specification defines the APIs for a TPP to submit a Software Statement Assertion to an ASPSP for the purpose of creating OAuth clients that are registered with ASPSP.\n",
+      "type": "text/plain"
+    }
+  }
+}
