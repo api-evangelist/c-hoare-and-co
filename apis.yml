@@ -27,6 +27,17 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
+- Financial-Services
+- Banking
+- Private Bank
+- Open Banking
+- PSD2
+- OBIE
+- FAPI
+- United Kingdom
+- Payments
+- Account Information
+tags_raw:
 - Financial Services
 - Banking
 - Private Bank
@@ -50,6 +61,11 @@ apis:
   humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
   baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
   tags:
+  - Account Information
+  - Transaction
+  - Open Banking
+  - AISP
+  tags_raw:
   - Account Information
   - Transactions
   - Open Banking
@@ -98,6 +114,11 @@ apis:
   humanURL: https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
   baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1
   tags:
+  - Dynamic Client Registration
+  - Authentication
+  - Onboarding
+  - Open Banking
+  tags_raw:
   - Dynamic Client Registration
   - OAuth2
   - Onboarding
