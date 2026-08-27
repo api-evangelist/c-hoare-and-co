@@ -52,87 +52,541 @@ created: '2026-07-23'
 modified: '2026-07-23'
 specificationVersion: '0.23'
 apis:
-- aid: c-hoare-and-co:c-hoare-and-co-account-and-transaction-api
-  name: C. Hoare & Co. Account and Transaction Information API
-  description: OBIE Read/Write Account & Transaction Information (AIS) API — lets onboarded, consented
-    AISP third-party providers retrieve C. Hoare & Co. account, balance, transaction, beneficiary, standing
-    order, direct debit, product, and party data. Conformant to the OBIE v3.1 Read/Write standard; FAPI-secured
-    (OAuth2/OIDC + PSD2 SCA + mTLS).
+- aid: c-hoare-and-co:c-hoare-and-co-account-access-api
+  name: C. Hoare & Co. Account Access API
+  description: The Account Access API from C. Hoare & Co. — 2 operation(s) for account access.
   humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
   baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
   tags:
-  - Account Information
-  - Transaction
-  - Open Banking
-  - AISP
-  tags_raw:
-  - Account Information
+  - Account Access
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-account-access-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-accounts-api
+  name: C. Hoare & Co. Accounts API
+  description: The Accounts API from C. Hoare & Co. — 2 operation(s) for accounts.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-balances-api
+  name: C. Hoare & Co. Balances API
+  description: The Balances API from C. Hoare & Co. — 2 operation(s) for balances.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Balances
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-balances-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-beneficiaries-api
+  name: C. Hoare & Co. Beneficiaries API
+  description: The Beneficiaries API from C. Hoare & Co. — 2 operation(s) for beneficiaries.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Beneficiaries
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-beneficiaries-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-client-registration-api
+  name: C. Hoare & Co. Client Registration API
+  description: >-
+    The Client Registration API from C. Hoare & Co. — 2 operation(s) for client registration.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Client Registration
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-client-registration-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-direct-debits-api
+  name: C. Hoare & Co. Direct Debits API
+  description: The Direct Debits API from C. Hoare & Co. — 2 operation(s) for direct debits.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Direct Debits
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-direct-debits-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-domestic-payments-api
+  name: C. Hoare & Co. Domestic Payments API
+  description: The Domestic Payments API from C. Hoare & Co. — 5 operation(s) for domestic payments.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Domestic Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-domestic-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-domestic-scheduled-payments-api
+  name: C. Hoare & Co. Domestic Scheduled Payments API
+  description: >-
+    The Domestic Scheduled Payments API from C. Hoare & Co. — 4 operation(s) for domestic scheduled payments.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Domestic Scheduled Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-domestic-scheduled-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-domestic-standing-orders-api
+  name: C. Hoare & Co. Domestic Standing Orders API
+  description: >-
+    The Domestic Standing Orders API from C. Hoare & Co. — 4 operation(s) for domestic standing orders.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Domestic Standing Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-domestic-standing-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-file-payments-api
+  name: C. Hoare & Co. File Payments API
+  description: The File Payments API from C. Hoare & Co. — 6 operation(s) for file payments.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - File Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-file-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-international-payments-api
+  name: C. Hoare & Co. International Payments API
+  description: >-
+    The International Payments API from C. Hoare & Co. — 5 operation(s) for international payments.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - International Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-international-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-international-scheduled-payments-api
+  name: C. Hoare & Co. International Scheduled Payments API
+  description: >-
+    The International Scheduled Payments API from C. Hoare & Co. — 5 operation(s) for international scheduled
+    payments.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - International Scheduled Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-international-scheduled-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-international-standing-orders-api
+  name: C. Hoare & Co. International Standing Orders API
+  description: >-
+    The International Standing Orders API from C. Hoare & Co. — 4 operation(s) for international standing
+    orders.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - International Standing Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-international-standing-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-offers-api
+  name: C. Hoare & Co. Offers API
+  description: The Offers API from C. Hoare & Co. — 2 operation(s) for offers.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Offers
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-offers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-partys-api
+  name: C. Hoare & Co. Partys API
+  description: The Partys API from C. Hoare & Co. — 2 operation(s) for partys.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Partys
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-partys-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-products-api
+  name: C. Hoare & Co. Products API
+  description: The Products API from C. Hoare & Co. — 2 operation(s) for products.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-products-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-scheduled-payments-api
+  name: C. Hoare & Co. Scheduled Payments API
+  description: The Scheduled Payments API from C. Hoare & Co. — 2 operation(s) for scheduled payments.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Scheduled Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-scheduled-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-standing-orders-api
+  name: C. Hoare & Co. Standing Orders API
+  description: The Standing Orders API from C. Hoare & Co. — 2 operation(s) for standing orders.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Standing Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-standing-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-statements-api
+  name: C. Hoare & Co. Statements API
+  description: The Statements API from C. Hoare & Co. — 5 operation(s) for statements.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
+  - Statements
+  properties:
+  - type: OpenAPI
+    url: openapi/c-hoare-and-co-statements-api-openapi.yml
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  - type: Documentation
+    url: https://www.hoaresbank.co.uk/open-banking
+  - type: Documentation
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: APIReference
+    url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
+  - type: Documentation
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+  - type: APIReference
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+- aid: c-hoare-and-co:c-hoare-and-co-transactions-api
+  name: C. Hoare & Co. Transactions API
+  description: The Transactions API from C. Hoare & Co. — 3 operation(s) for transactions.
+  humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
+  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
+  tags:
   - Transactions
-  - Open Banking
-  - AISP
   properties:
   - type: OpenAPI
-    url: openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml
+    url: openapi/c-hoare-and-co-transactions-api-openapi.yml
   - type: Documentation
     url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
   - type: APIReference
     url: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
   - type: Documentation
     url: https://www.hoaresbank.co.uk/open-banking
-  - type: Overlay
-    url: overlays/c-hoare-and-co-account-and-transaction-api-overlay.yaml
-- aid: c-hoare-and-co:c-hoare-and-co-payment-initiation-api
-  name: C. Hoare & Co. Payment Initiation API
-  description: OBIE Read/Write Payment Initiation (PIS) API — lets onboarded, consented PISP third-party
-    providers initiate domestic and scheduled payments and standing orders and retrieve payment/consent
-    status on behalf of C. Hoare & Co. customers. Conformant to the OBIE v3.1 Read/Write standard; FAPI-secured
-    (OAuth2/OIDC + PSD2 SCA + mTLS).
-  humanURL: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
-  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/pisp
-  tags:
-  - Payment Initiation
-  - Payments
-  - Open Banking
-  - PISP
-  properties:
-  - type: OpenAPI
-    url: openapi/c-hoare-and-co-payment-initiation-api-openapi.yml
   - type: Documentation
     url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
   - type: APIReference
     url: https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs
   - type: Documentation
-    url: https://www.hoaresbank.co.uk/open-banking
-  - type: Overlay
-    url: overlays/c-hoare-and-co-payment-initiation-api-overlay.yaml
-- aid: c-hoare-and-co:c-hoare-and-co-dynamic-client-registration-api
-  name: C. Hoare & Co. Dynamic Client Registration API
-  description: OBIE Dynamic Client Registration (DCR) proxy — lets third-party providers submit a signed
-    Software Statement Assertion to register an OAuth2 client with C. Hoare & Co. as part of TPP onboarding.
-    Published on the developer portal as v3.1-RC1; the harvested contract is the shared OBIE client-registration
-    standard.
-  humanURL: https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
-  baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1
-  tags:
-  - Dynamic Client Registration
-  - Authentication
-  - Onboarding
-  - Open Banking
-  tags_raw:
-  - Dynamic Client Registration
-  - OAuth2
-  - Onboarding
-  - Open Banking
-  properties:
-  - type: OpenAPI
-    url: openapi/c-hoare-and-co-dynamic-client-registration-api-openapi.yml
-  - type: Documentation
-    url: https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
   - type: APIReference
-    url: https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
-  - type: Overlay
-    url: overlays/c-hoare-and-co-dynamic-client-registration-api-overlay.yaml
+    url: >-
+      https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
 common:
+- type: Overlay
+  url: overlays/c-hoare-and-co-account-and-transaction-api-overlay.yaml
+- type: Overlay
+  url: overlays/c-hoare-and-co-payment-initiation-api-overlay.yaml
+- type: Overlay
+  url: overlays/c-hoare-and-co-dynamic-client-registration-api-overlay.yaml
 - type: DomainSecurity
   url: security/c-hoare-and-co-domain-security.yml
 - type: AgenticAccess
