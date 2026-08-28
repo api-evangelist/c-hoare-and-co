@@ -13,6 +13,18 @@ description: C. Hoare & Co. (Hoares Bank) is the United Kingdom's oldest private
   conformant to the Open Banking Implementation Entity (OBIE) v3.1 standard. Production access is FAPI-secured
   with OAuth2/OIDC, PSD2 strong customer authentication, and mutual-TLS client authentication using OBIE/eIDAS
   certificates after third-party provider onboarding.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: partner
