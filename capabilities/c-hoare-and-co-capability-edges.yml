@@ -1,0 +1,111 @@
+slug: c-hoare-and-co
+provider: C. Hoare & Co.
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 10
+edges:
+- tag: Domestic Payments
+  spec_file: c-hoare-and-co-domestic-payments-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.92
+  evidence: POST /domestic-payments CreateDomesticPayments; GET /domestic-payment-consents/{ConsentId}/funds-confirmation
+  reason: 'Open Banking payment initiation: consent capture, funds confirmation and submission of a domestic
+    payment instruction — textbook payment initiation management.'
+- tag: Domestic Scheduled Payments
+  spec_file: c-hoare-and-co-domestic-scheduled-payments-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.88
+  evidence: POST /domestic-scheduled-payments CreateDomesticScheduledPayments; schema OBWriteDataDomesticScheduledConsent2
+  reason: Capture, authorisation via consent, and submission of future-dated domestic payment instructions
+    — payment initiation.
+- tag: Domestic Standing Orders
+  spec_file: c-hoare-and-co-domestic-standing-orders-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.85
+  evidence: POST /domestic-standing-orders CreateDomesticStandingOrders; schema OBWriteDomesticStandingOrderResponse2
+  reason: Consent capture and creation of recurring domestic standing order payment instructions — payment
+    instruction capture and authorisation.
+- tag: International Payments
+  spec_file: c-hoare-and-co-international-payments-api-openapi.yml
+  capability_id: BC-1340.40
+  capability_id_l1: BC-1340
+  capability_name: Cross-Border Payment Management
+  confidence: 0.85
+  evidence: POST /international-payments CreateInternationalPayments; schemas OBInternational2, OBBranchAndFinancialInstitutionIdentification6,
+    OBPriority2Code
+  reason: Initiation of cross-border payment instructions including currency-of-transfer and correspondent
+    institution details — international payment management.
+- tag: File Payments
+  spec_file: c-hoare-and-co-file-payments-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.8
+  evidence: POST /file-payments CreateFilePayments; POST /file-payment-consents/{ConsentId}/file
+  reason: Bulk/batch payment instruction submission via file upload with consent and report file retrieval
+    — payment instruction capture and authorisation, not generic file handling.
+- tag: Products
+  spec_file: c-hoare-and-co-products-api-openapi.yml
+  capability_id: BC-1310.10
+  capability_id_l1: BC-1310
+  capability_name: Product Catalogue Management
+  confidence: 0.78
+  evidence: GET /products  GetProducts  Get Products ... OBProduct2, OBPCAData1, OBBCAData1, OBExternalProductType1Code
+  reason: Exposes personal/business current account product definitions and the product associated with
+    an account — a banking product catalogue read surface.
+- tag: International Scheduled Payments
+  spec_file: c-hoare-and-co-international-scheduled-payments-api-openapi.yml
+  capability_id: BC-1340.40
+  capability_id_l1: BC-1340
+  capability_name: Cross-Border Payment Management
+  confidence: 0.72
+  evidence: POST /international-scheduled-payments  CreateInternationalScheduledPayments  Create International
+    Scheduled Payments
+  reason: Open Banking payment initiation surface for international (cross-border) scheduled payments,
+    including consent creation and funds confirmation; maps to payments management, specifically cross-border
+    payment initiation. Some ambiguity between Payment Initiation (BC-1340.10) and Cross-Border (BC-1340.40)
+    — the 'international' qualifier drives the latter.
+- tag: Partys
+  spec_file: c-hoare-and-co-partys-api-openapi.yml
+  capability_id: BC-1300.40
+  capability_id_l1: BC-1300
+  capability_name: Customer Information Management
+  confidence: 0.72
+  evidence: GET /accounts/{AccountId}/party  GetAccountsAccountIdParty  Get Party ... OBParty1, OBExternalPartyType1Code,
+    OBPostalAddress8
+  reason: Returns the account holder / party details (name, type, address) — banking customer information
+    rather than any transactional capability.
+- tag: Accounts
+  spec_file: c-hoare-and-co-accounts-api-openapi.yml
+  capability_id: BC-1330.10
+  capability_id_l1: BC-1330
+  capability_name: Deposit Account Management
+  confidence: 0.7
+  evidence: GET /accounts GetAccounts; schemas OBReadAccount3, OBCashAccount5, OBExternalAccountType1Code
+  reason: Exposes the bank's payment/current account master records (identification, type, sub-type) for
+    an ASPSP — deposit account information rather than any technical object.
+- tag: International Standing Orders
+  spec_file: c-hoare-and-co-international-standing-orders-api-openapi.yml
+  capability_id: BC-1340.40
+  capability_id_l1: BC-1340
+  capability_name: Cross-Border Payment Management
+  confidence: 0.7
+  evidence: POST /international-standing-orders  CreateInternationalStandingOrders  Create International
+    Standing Orders
+  reason: Payment initiation of recurring international standing orders with consent capture (OBWriteInternationalStandingOrderConsent2);
+    cross-border payment management is the closest fit, though generic payment initiation is also plausible.

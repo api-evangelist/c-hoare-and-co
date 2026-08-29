@@ -593,6 +593,9 @@ apis:
     url: >-
       https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs
 common:
+- type: CapabilityMap
+  url: capabilities/c-hoare-and-co-capability-edges.yml
+  name: C. Hoare & Co. Business Capability Map
 - type: Overlay
   url: overlays/c-hoare-and-co-account-and-transaction-api-overlay.yaml
 - type: Overlay
