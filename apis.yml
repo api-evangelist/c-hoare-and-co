@@ -96,6 +96,8 @@ apis:
   humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
   baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -468,6 +470,8 @@ apis:
   humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
   baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -572,6 +576,8 @@ apis:
   humanURL: https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs
   baseURL: https://api.hoaresbank.co.uk/open-banking/v3.1/aisp
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
