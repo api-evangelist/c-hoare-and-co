@@ -2,15 +2,15 @@
 kin_checks:
   slug: c-hoare-and-co
   schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
+  scored_at: '2026-08-28'
+  run_ts: 2026-08-28T221322
   note: Actionable checks only (missed + partial). earned/na are every other check
     in rubric/scoring-0.15.1.yml; counts below let you verify that.
   counts:
     total: 130
-    earned: 43
-    partial: 8
-    missed: 60
+    earned: 44
+    partial: 13
+    missed: 54
     na: 19
   checks:
   - id: well_known_published
@@ -19,30 +19,18 @@ kin_checks:
     status: missed
   - id: openapi_3_2
     status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 20 openapi documents pass
   - id: openapi_3_1
     status: missed
-    detail: 0 of 1 openapi documents pass
-  - id: info_complete
-    status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 20 openapi documents pass
   - id: operations_description_coverage
     status: missed
-    detail: 0 of 1 openapi documents pass
-  - id: operations_operation_ids
-    status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 20 openapi documents pass
   - id: examples_present
     status: missed
-  - id: components_reuse
-    status: missed
-    detail: 0 of 1 openapi documents pass
-  - id: oauth_scopes_enumerated
-    status: missed
-    detail: 0 of 1 openapi documents pass
   - id: webhooks_or_callbacks
     status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 20 openapi documents pass
   - id: asyncapi_present
     status: missed
   - id: json_schema_present
@@ -121,8 +109,6 @@ kin_checks:
     status: missed
   - id: openapi_examples
     status: missed
-  - id: rate_limit_signal
-    status: missed
   - id: event_surface_described
     status: missed
   - id: well_known_catalog
@@ -133,14 +119,28 @@ kin_checks:
     status: missed
   - id: dry_run_mode
     status: missed
-  - id: delegated_identity
-    status: missed
   - id: protected_resource_metadata
     status: missed
   - id: dynamic_client_registration
     status: missed
   - id: agentic_commerce
     status: missed
+  - id: info_complete
+    status: partial
+    earned: 2.4
+    detail: 12 of 20 openapi documents pass
+  - id: operations_operation_ids
+    status: partial
+    earned: 3.8
+    detail: 19 of 20 openapi documents pass
+  - id: components_reuse
+    status: partial
+    earned: 2.85
+    detail: 19 of 20 openapi documents pass
+  - id: oauth_scopes_enumerated
+    status: partial
+    earned: 3.8
+    detail: 19 of 20 openapi documents pass
   - id: lifecycle_documented
     status: partial
     earned: 0.95
@@ -170,3 +170,7 @@ kin_checks:
     status: partial
     earned: 1.25
     detail: 'authorship: derived'
+  - id: delegated_identity
+    status: partial
+    earned: 3.0
+    detail: 'grade: documented'
