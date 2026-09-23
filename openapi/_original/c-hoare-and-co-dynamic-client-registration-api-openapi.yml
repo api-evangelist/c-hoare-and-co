@@ -6,6 +6,9 @@ info:
     Assertion to an ASPSP for the purpose of creating OAuth clients that are
     registered with ASPSP.
   version: v3.1.0
+servers:
+- url: https://api.hoaresbank.co.uk/open-banking/v3.1
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 paths:
   /register:
     post:

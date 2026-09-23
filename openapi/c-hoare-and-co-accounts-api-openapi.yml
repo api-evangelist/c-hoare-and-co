@@ -86,47 +86,70 @@ paths:
       - PSUOAuth2Security:
         - accounts
 components:
+  responses:
+    200AccountsAccountIdRead:
+      description: Accounts Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadAccount3'
+    406ErrorResponse:
+      description: Not Acceptable
+    404ErrorResponse:
+      description: Not found
+    400ErrorResponse:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+    405ErrorResponse:
+      description: Method Not Allowed
+    200AccountsRead:
+      description: Accounts Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadAccount3'
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+    401ErrorResponse:
+      description: Unauthorized
+    429ErrorResponse:
+      description: Too Many Requests
+      headers:
+        Retry-After:
+          description: Number in seconds to wait
+          schema:
+            type: integer
+    403ErrorResponse:
+      description: Forbidden
   schemas:
-    AccountId:
-      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
+    ISODateTime:
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
       type: string
+      format: date-time
+    OBExternalFinancialInstitutionIdentification4Code:
+      description: Name of the identification scheme, in a coded form as published in an external list.
+      type: string
+      example:
+      - UK.OBIE.BICFI
       minLength: 1
       maxLength: 40
-    Links:
-      type: object
-      description: Links relevant to the payload
-      properties:
-        Self:
-          type: string
-          format: uri
-        First:
-          type: string
-          format: uri
-        Prev:
-          type: string
-          format: uri
-        Next:
-          type: string
-          format: uri
-        Last:
-          type: string
-          format: uri
-      additionalProperties: false
-      required:
-      - Self
-    Meta:
-      title: MetaData
-      type: object
-      description: Meta Data relevant to the payload
-      properties:
-        TotalPages:
-          type: integer
-          format: int32
-        FirstAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-        LastAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-      additionalProperties: false
     OBError1:
       type: object
       properties:
@@ -155,107 +178,6 @@ components:
       - Message
       additionalProperties: false
       minProperties: 1
-    OBReadAccount3:
-      type: object
-      properties:
-        Data:
-          type: object
-          properties:
-            Account:
-              items:
-                $ref: '#/components/schemas/OBAccount3'
-              type: array
-              description: Unambiguous identification of the account to which credit and debit entries are made.
-          additionalProperties: false
-        Links:
-          $ref: '#/components/schemas/Links'
-        Meta:
-          $ref: '#/components/schemas/Meta'
-      required:
-      - Data
-      - Links
-      - Meta
-      additionalProperties: false
-    OBErrorResponse1:
-      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
-      type: object
-      properties:
-        Code:
-          description: High level textual error code, to help categorize the errors.
-          type: string
-          minLength: 1
-          maxLength: 40
-        Id:
-          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
-          type: string
-          minLength: 1
-          maxLength: 40
-        Message:
-          description: Brief Error message, e.g., 'There is something wrong with the request parameters provided'
-          type: string
-          minLength: 1
-          maxLength: 500
-        Errors:
-          items:
-            $ref: '#/components/schemas/OBError1'
-          type: array
-          minItems: 1
-      required:
-      - Code
-      - Message
-      - Errors
-      additionalProperties: false
-    OBBranchAndFinancialInstitutionIdentification5:
-      description: 'Party that manages the account on behalf of the account owner, that is manages the registration and booking of entries on the account, calculates balances on the account and provides information about the account.
-
-        This is the servicer of the beneficiary account.'
-      type: object
-      properties:
-        SchemeName:
-          $ref: '#/components/schemas/OBExternalFinancialInstitutionIdentification4Code'
-        Identification:
-          description: Unique and unambiguous identification of the servicing institution.
-          type: string
-          minLength: 1
-          maxLength: 35
-      required:
-      - SchemeName
-      - Identification
-      additionalProperties: false
-    ISODateTime:
-      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-      type: string
-      format: date-time
-    OBAccount3Basic:
-      description: Unambiguous identification of the account to which credit and debit entries are made.
-      type: object
-      properties:
-        AccountId:
-          $ref: '#/components/schemas/AccountId'
-        Currency:
-          description: "Identification of the currency in which the account is held. \nUsage: Currency should only be used in case one and the same account number covers several currencies\nand the initiating party needs to identify which currency needs to be used for settlement on the account."
-          type: string
-          pattern: ^[A-Z]{3,3}$
-        AccountType:
-          $ref: '#/components/schemas/OBExternalAccountType1Code'
-        AccountSubType:
-          $ref: '#/components/schemas/OBExternalAccountSubType1Code'
-        Description:
-          description: Specifies the description of the account type.
-          type: string
-          minLength: 1
-          maxLength: 35
-        Nickname:
-          description: The nickname of the account, assigned by the account owner in order to provide an additional means of identification of the account.
-          type: string
-          minLength: 1
-          maxLength: 70
-      required:
-      - AccountId
-      - Currency
-      - AccountType
-      - AccountSubType
-      additionalProperties: false
     OBAccount3Detail:
       description: Unambiguous identification of the account to which credit and debit entries are made.
       type: object
@@ -294,10 +216,165 @@ components:
       - AccountSubType
       - Account
       additionalProperties: false
+    OBReadAccount3:
+      type: object
+      properties:
+        Data:
+          type: object
+          properties:
+            Account:
+              items:
+                $ref: '#/components/schemas/OBAccount3'
+              type: array
+              description: Unambiguous identification of the account to which credit and debit entries are made.
+          additionalProperties: false
+        Links:
+          $ref: '#/components/schemas/Links'
+        Meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - Data
+      - Links
+      - Meta
+      additionalProperties: false
+    OBExternalAccountIdentification4Code:
+      description: Name of the identification scheme, in a coded form as published in an external list.
+      type: string
+      example:
+      - UK.OBIE.BBAN
+      - UK.OBIE.IBAN
+      - UK.OBIE.PAN
+      - UK.OBIE.Paym
+      - UK.OBIE.SortCodeAccountNumber
+      minLength: 1
+      maxLength: 40
+    OBExternalAccountSubType1Code:
+      description: Specifies the sub type of account (product family group).
+      type: string
+      enum:
+      - ChargeCard
+      - CreditCard
+      - CurrentAccount
+      - EMoney
+      - Loan
+      - Mortgage
+      - PrePaidCard
+      - Savings
+    OBBranchAndFinancialInstitutionIdentification5:
+      description: 'Party that manages the account on behalf of the account owner, that is manages the registration and booking of entries on the account, calculates balances on the account and provides information about the account.
+
+        This is the servicer of the beneficiary account.'
+      type: object
+      properties:
+        SchemeName:
+          $ref: '#/components/schemas/OBExternalFinancialInstitutionIdentification4Code'
+        Identification:
+          description: Unique and unambiguous identification of the servicing institution.
+          type: string
+          minLength: 1
+          maxLength: 35
+      required:
+      - SchemeName
+      - Identification
+      additionalProperties: false
+    Links:
+      type: object
+      description: Links relevant to the payload
+      properties:
+        Self:
+          type: string
+          format: uri
+        First:
+          type: string
+          format: uri
+        Prev:
+          type: string
+          format: uri
+        Next:
+          type: string
+          format: uri
+        Last:
+          type: string
+          format: uri
+      additionalProperties: false
+      required:
+      - Self
     OBAccount3:
       oneOf:
       - $ref: '#/components/schemas/OBAccount3Basic'
       - $ref: '#/components/schemas/OBAccount3Detail'
+    OBAccount3Basic:
+      description: Unambiguous identification of the account to which credit and debit entries are made.
+      type: object
+      properties:
+        AccountId:
+          $ref: '#/components/schemas/AccountId'
+        Currency:
+          description: "Identification of the currency in which the account is held. \nUsage: Currency should only be used in case one and the same account number covers several currencies\nand the initiating party needs to identify which currency needs to be used for settlement on the account."
+          type: string
+          pattern: ^[A-Z]{3,3}$
+        AccountType:
+          $ref: '#/components/schemas/OBExternalAccountType1Code'
+        AccountSubType:
+          $ref: '#/components/schemas/OBExternalAccountSubType1Code'
+        Description:
+          description: Specifies the description of the account type.
+          type: string
+          minLength: 1
+          maxLength: 35
+        Nickname:
+          description: The nickname of the account, assigned by the account owner in order to provide an additional means of identification of the account.
+          type: string
+          minLength: 1
+          maxLength: 70
+      required:
+      - AccountId
+      - Currency
+      - AccountType
+      - AccountSubType
+      additionalProperties: false
+    Meta:
+      title: MetaData
+      type: object
+      description: Meta Data relevant to the payload
+      properties:
+        TotalPages:
+          type: integer
+          format: int32
+        FirstAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+        LastAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+      additionalProperties: false
+    OBErrorResponse1:
+      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+      type: object
+      properties:
+        Code:
+          description: High level textual error code, to help categorize the errors.
+          type: string
+          minLength: 1
+          maxLength: 40
+        Id:
+          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
+          type: string
+          minLength: 1
+          maxLength: 40
+        Message:
+          description: Brief Error message, e.g., 'There is something wrong with the request parameters provided'
+          type: string
+          minLength: 1
+          maxLength: 500
+        Errors:
+          items:
+            $ref: '#/components/schemas/OBError1'
+          type: array
+          minItems: 1
+      required:
+      - Code
+      - Message
+      - Errors
+      additionalProperties: false
     OBCashAccount5:
       description: Provides the details to identify the beneficiary account.
       type: object
@@ -325,15 +402,9 @@ components:
       - SchemeName
       - Identification
       additionalProperties: false
-    OBExternalAccountIdentification4Code:
-      description: Name of the identification scheme, in a coded form as published in an external list.
+    AccountId:
+      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
       type: string
-      example:
-      - UK.OBIE.BBAN
-      - UK.OBIE.IBAN
-      - UK.OBIE.PAN
-      - UK.OBIE.Paym
-      - UK.OBIE.SortCodeAccountNumber
       minLength: 1
       maxLength: 40
     OBExternalAccountType1Code:
@@ -342,78 +413,15 @@ components:
       enum:
       - Business
       - Personal
-    OBExternalAccountSubType1Code:
-      description: Specifies the sub type of account (product family group).
-      type: string
-      enum:
-      - ChargeCard
-      - CreditCard
-      - CurrentAccount
-      - EMoney
-      - Loan
-      - Mortgage
-      - PrePaidCard
-      - Savings
-    OBExternalFinancialInstitutionIdentification4Code:
-      description: Name of the identification scheme, in a coded form as published in an external list.
-      type: string
-      example:
-      - UK.OBIE.BICFI
-      minLength: 1
-      maxLength: 40
-  responses:
-    401ErrorResponse:
-      description: Unauthorized
-    429ErrorResponse:
-      description: Too Many Requests
-      headers:
-        Retry-After:
-          description: Number in seconds to wait
-          schema:
-            type: integer
-    500ErrorResponse:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-    405ErrorResponse:
-      description: Method Not Allowed
-    200AccountsRead:
-      description: Accounts Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBReadAccount3'
-    200AccountsAccountIdRead:
-      description: Accounts Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBReadAccount3'
-    400ErrorResponse:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-    406ErrorResponse:
-      description: Not Acceptable
-    404ErrorResponse:
-      description: Not found
-    403ErrorResponse:
-      description: Forbidden
   parameters:
+    x-fapi-customer-last-logged-time-Param:
+      in: header
+      name: x-fapi-customer-last-logged-time
+      required: false
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      schema:
+        type: string
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
     AccountId:
       name: AccountId
       in: path
@@ -421,11 +429,11 @@ components:
       required: true
       schema:
         type: string
-    x-fapi-customer-ip-address-Param:
+    x-customer-user-agent-Param:
       in: header
-      name: x-fapi-customer-ip-address
+      name: x-customer-user-agent
+      description: Indicates the user-agent that the PSU is using.
       required: false
-      description: The PSU's IP address if the PSU is currently logged in with the TPP.
       schema:
         type: string
     x-fapi-interaction-id-Param:
@@ -435,11 +443,11 @@ components:
       description: An RFC4122 UID used as a correlation id.
       schema:
         type: string
-    x-fapi-financial-id-Param:
+    x-fapi-customer-ip-address-Param:
       in: header
-      name: x-fapi-financial-id
-      required: true
-      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
+      name: x-fapi-customer-ip-address
+      required: false
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
       schema:
         type: string
     AuthorizationParam:
@@ -449,19 +457,11 @@ components:
       description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
       schema:
         type: string
-    x-fapi-customer-last-logged-time-Param:
+    x-fapi-financial-id-Param:
       in: header
-      name: x-fapi-customer-last-logged-time
-      required: false
-      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
-      schema:
-        type: string
-        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
-    x-customer-user-agent-Param:
-      in: header
-      name: x-customer-user-agent
-      description: Indicates the user-agent that the PSU is using.
-      required: false
+      name: x-fapi-financial-id
+      required: true
+      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
       schema:
         type: string
   securitySchemes:

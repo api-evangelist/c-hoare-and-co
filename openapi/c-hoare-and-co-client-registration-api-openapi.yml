@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Dynamic Client Registration API
-  description: 'This specification defines the APIs for a TPP to submit a Software Statement Assertion to an ASPSP for the purpose of creating OAuth clients that are registered with ASPSP.
-
-    '
+  description: This specification defines the APIs for a TPP to submit a Software Statement Assertion to an ASPSP for the purpose of creating OAuth clients that are registered with ASPSP.
   version: v3.1.0
 servers:
 - url: https://api.hoaresbank.co.uk/open-banking/v3.1
@@ -25,6 +23,8 @@ paths:
           $ref: '#/components/responses/400Error'
       requestBody:
         $ref: '#/components/requestBodies/ClientRegistration'
+      operationId: postRegister
+      x-operation-id-source: derived
   /register/{ClientId}:
     get:
       summary: Get a client by way of Client ID
@@ -42,6 +42,8 @@ paths:
           $ref: '#/components/responses/403Error'
       security:
       - TPPOAuth2Security: []
+      operationId: getRegisterByClientId
+      x-operation-id-source: derived
     put:
       summary: Update a client by way of Client ID
       tags:
@@ -62,6 +64,8 @@ paths:
       - TPPOAuth2Security: []
       requestBody:
         $ref: '#/components/requestBodies/ClientRegistration'
+      operationId: putRegisterByClientId
+      x-operation-id-source: derived
     delete:
       summary: Delete a client by way of Client ID
       tags:
@@ -80,24 +84,50 @@ paths:
           $ref: '#/components/responses/403Error'
       security:
       - TPPOAuth2Security: []
+      operationId: deleteRegisterByClientId
+      x-operation-id-source: derived
 components:
+  responses:
+    400Error:
+      description: Request failed due to client error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RegistrationError'
+    401Error:
+      description: Request failed due to unknown or invalid Client or invalid access token
+      headers:
+        WWW-Authenticate:
+          description: Response header field specified in https://tools.ietf.org/html/rfc6750
+          schema:
+            type: string
+    OBClientRegistration1:
+      description: Client registration
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/OBRegistrationProperties1'
+            - required:
+              - client_id
+    403Error:
+      description: The client does not have permission to read, update or delete the Client
+  requestBodies:
+    ClientRegistration:
+      description: A request to register a Software Statement Assertion with an ASPSP
+      content:
+        application/json:
+          schema:
+            type: string
+            format: OBClientRegistration1
+      required: true
   schemas:
-    RegistrationError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          enum:
-          - invalid_redirect_uri
-          - invalid_client_metadata
-          - invalid_software_statement
-          - unapproved_software_statement
-        error_description:
-          type: string
-          minLength: 1
-          maxLength: 500
+    SupportedAlgorithms:
+      type: string
+      enum:
+      - RS256
+      - PS256
+      - ES256
     OBRegistrationProperties1:
       type: object
       required:
@@ -184,37 +214,22 @@ components:
           type: string
           minLength: 1
           maxLength: 128
-    SupportedAlgorithms:
-      type: string
-      enum:
-      - RS256
-      - PS256
-      - ES256
-  responses:
-    403Error:
-      description: The client does not have permission to read, update or delete the Client
-    OBClientRegistration1:
-      description: Client registration
-      content:
-        application/json:
-          schema:
-            allOf:
-            - $ref: '#/components/schemas/OBRegistrationProperties1'
-            - required:
-              - client_id
-    401Error:
-      description: Request failed due to unknown or invalid Client or invalid access token
-      headers:
-        WWW-Authenticate:
-          description: Response header field specified in https://tools.ietf.org/html/rfc6750
-          schema:
-            type: string
-    400Error:
-      description: Request failed due to client error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RegistrationError'
+    RegistrationError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_redirect_uri
+          - invalid_client_metadata
+          - invalid_software_statement
+          - unapproved_software_statement
+        error_description:
+          type: string
+          minLength: 1
+          maxLength: 500
   parameters:
     ClientId:
       name: ClientId
@@ -230,15 +245,6 @@ components:
       description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
       schema:
         type: string
-  requestBodies:
-    ClientRegistration:
-      description: A request to register a Software Statement Assertion with an ASPSP
-      content:
-        application/json:
-          schema:
-            type: string
-            format: OBClientRegistration1
-      required: true
   securitySchemes:
     TPPOAuth2Security:
       type: oauth2

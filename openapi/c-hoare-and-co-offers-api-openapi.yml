@@ -89,46 +89,10 @@ paths:
         - accounts
 components:
   schemas:
-    AccountId:
-      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
+    ISODateTime:
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
       type: string
-      minLength: 1
-      maxLength: 40
-    Links:
-      type: object
-      description: Links relevant to the payload
-      properties:
-        Self:
-          type: string
-          format: uri
-        First:
-          type: string
-          format: uri
-        Prev:
-          type: string
-          format: uri
-        Next:
-          type: string
-          format: uri
-        Last:
-          type: string
-          format: uri
-      additionalProperties: false
-      required:
-      - Self
-    Meta:
-      title: MetaData
-      type: object
-      description: Meta Data relevant to the payload
-      properties:
-        TotalPages:
-          type: integer
-          format: int32
-        FirstAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-        LastAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-      additionalProperties: false
+      format: date-time
     OBError1:
       type: object
       properties:
@@ -157,15 +121,65 @@ components:
       - Message
       additionalProperties: false
       minProperties: 1
-    OBExternalOfferType1Code:
-      description: Offer type, in a coded form.
+    OBReadOffer1:
+      type: object
+      properties:
+        Data:
+          type: object
+          properties:
+            Offer:
+              items:
+                $ref: '#/components/schemas/OBOffer1'
+              type: array
+          additionalProperties: false
+        Links:
+          $ref: '#/components/schemas/Links'
+        Meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - Data
+      - Links
+      - Meta
+      additionalProperties: false
+    Links:
+      type: object
+      description: Links relevant to the payload
+      properties:
+        Self:
+          type: string
+          format: uri
+        First:
+          type: string
+          format: uri
+        Prev:
+          type: string
+          format: uri
+        Next:
+          type: string
+          format: uri
+        Last:
+          type: string
+          format: uri
+      additionalProperties: false
+      required:
+      - Self
+    OBActiveCurrencyAndAmount_SimpleType:
+      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
       type: string
-      enum:
-      - BalanceTransfer
-      - LimitIncrease
-      - MoneyTransfer
-      - Other
-      - PromotionalRate
+      pattern: ^\d{1,13}\.\d{1,5}$
+    Meta:
+      title: MetaData
+      type: object
+      description: Meta Data relevant to the payload
+      properties:
+        TotalPages:
+          type: integer
+          format: int32
+        FirstAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+        LastAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+      additionalProperties: false
     OBErrorResponse1:
       description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
       type: object
@@ -209,14 +223,6 @@ components:
       - Amount
       - Currency
       additionalProperties: false
-    ISODateTime:
-      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-      type: string
-      format: date-time
-    OBActiveCurrencyAndAmount_SimpleType:
-      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
-      type: string
-      pattern: ^\d{1,13}\.\d{1,5}$
     OBOffer1:
       type: object
       properties:
@@ -269,29 +275,74 @@ components:
       required:
       - AccountId
       additionalProperties: false
-    OBReadOffer1:
-      type: object
-      properties:
-        Data:
-          type: object
-          properties:
-            Offer:
-              items:
-                $ref: '#/components/schemas/OBOffer1'
-              type: array
-          additionalProperties: false
-        Links:
-          $ref: '#/components/schemas/Links'
-        Meta:
-          $ref: '#/components/schemas/Meta'
-      required:
-      - Data
-      - Links
-      - Meta
-      additionalProperties: false
+    AccountId:
+      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
+      type: string
+      minLength: 1
+      maxLength: 40
+    OBExternalOfferType1Code:
+      description: Offer type, in a coded form.
+      type: string
+      enum:
+      - BalanceTransfer
+      - LimitIncrease
+      - MoneyTransfer
+      - Other
+      - PromotionalRate
+  parameters:
+    x-fapi-customer-last-logged-time-Param:
+      in: header
+      name: x-fapi-customer-last-logged-time
+      required: false
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      schema:
+        type: string
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+    AccountId:
+      name: AccountId
+      in: path
+      description: AccountId
+      required: true
+      schema:
+        type: string
+    x-customer-user-agent-Param:
+      in: header
+      name: x-customer-user-agent
+      description: Indicates the user-agent that the PSU is using.
+      required: false
+      schema:
+        type: string
+    x-fapi-interaction-id-Param:
+      in: header
+      name: x-fapi-interaction-id
+      required: false
+      description: An RFC4122 UID used as a correlation id.
+      schema:
+        type: string
+    x-fapi-customer-ip-address-Param:
+      in: header
+      name: x-fapi-customer-ip-address
+      required: false
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
+      schema:
+        type: string
+    AuthorizationParam:
+      in: header
+      name: Authorization
+      required: true
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      schema:
+        type: string
+    x-fapi-financial-id-Param:
+      in: header
+      name: x-fapi-financial-id
+      required: true
+      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
+      schema:
+        type: string
   responses:
-    401ErrorResponse:
-      description: Unauthorized
+    406ErrorResponse:
+      description: Not Acceptable
     200AccountsAccountIdOffersRead:
       description: Offers Read
       headers:
@@ -303,27 +354,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OBReadOffer1'
-    429ErrorResponse:
-      description: Too Many Requests
-      headers:
-        Retry-After:
-          description: Number in seconds to wait
-          schema:
-            type: integer
-    500ErrorResponse:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-    405ErrorResponse:
-      description: Method Not Allowed
-    400ErrorResponse:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
+    404ErrorResponse:
+      description: Not found
     200OffersRead:
       description: Offers Read
       headers:
@@ -335,63 +367,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OBReadOffer1'
-    406ErrorResponse:
-      description: Not Acceptable
-    404ErrorResponse:
-      description: Not found
+    400ErrorResponse:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+    405ErrorResponse:
+      description: Method Not Allowed
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+    401ErrorResponse:
+      description: Unauthorized
+    429ErrorResponse:
+      description: Too Many Requests
+      headers:
+        Retry-After:
+          description: Number in seconds to wait
+          schema:
+            type: integer
     403ErrorResponse:
       description: Forbidden
-  parameters:
-    x-fapi-customer-ip-address-Param:
-      in: header
-      name: x-fapi-customer-ip-address
-      required: false
-      description: The PSU's IP address if the PSU is currently logged in with the TPP.
-      schema:
-        type: string
-    AccountId:
-      name: AccountId
-      in: path
-      description: AccountId
-      required: true
-      schema:
-        type: string
-    x-fapi-interaction-id-Param:
-      in: header
-      name: x-fapi-interaction-id
-      required: false
-      description: An RFC4122 UID used as a correlation id.
-      schema:
-        type: string
-    x-fapi-financial-id-Param:
-      in: header
-      name: x-fapi-financial-id
-      required: true
-      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
-      schema:
-        type: string
-    AuthorizationParam:
-      in: header
-      name: Authorization
-      required: true
-      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
-      schema:
-        type: string
-    x-fapi-customer-last-logged-time-Param:
-      in: header
-      name: x-fapi-customer-last-logged-time
-      required: false
-      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
-      schema:
-        type: string
-        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
-    x-customer-user-agent-Param:
-      in: header
-      name: x-customer-user-agent
-      description: Indicates the user-agent that the PSU is using.
-      required: false
-      schema:
-        type: string
   securitySchemes:
     PSUOAuth2Security:
       type: oauth2

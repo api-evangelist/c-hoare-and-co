@@ -203,100 +203,237 @@ paths:
       - PSUOAuth2Security:
         - accounts
 components:
+  responses:
+    200AccountsAccountIdStatementsRead:
+      description: Statements Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadStatement1'
+    406ErrorResponse:
+      description: Not Acceptable
+    200AccountsAccountIdStatementsStatementIdRead:
+      description: Statements Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadStatement1'
+    404ErrorResponse:
+      description: Not found
+    200StatementsRead:
+      description: Statements Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadStatement1'
+    400ErrorResponse:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+    405ErrorResponse:
+      description: Method Not Allowed
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+    401ErrorResponse:
+      description: Unauthorized
+    429ErrorResponse:
+      description: Too Many Requests
+      headers:
+        Retry-After:
+          description: Number in seconds to wait
+          schema:
+            type: integer
+    200AccountsAccountIdStatementsStatementIdFileRead:
+      description: Statements Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+      content:
+        '*/*':
+          schema:
+            type: string
+            format: binary
+    403ErrorResponse:
+      description: Forbidden
+    200AccountsAccountIdStatementsStatementIdTransactionsRead:
+      description: Transactions Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadTransaction4'
   schemas:
-    AccountId:
-      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
-      type: string
-      minLength: 1
-      maxLength: 40
-    OBStatementInterest1:
-      description: Set of elements used to provide details of a generic interest amount related to the statement resource.
-      type: object
-      properties:
-        CreditDebitIndicator:
-          type: string
-          enum:
-          - Credit
-          - Debit
-          description: "Indicates whether the amount is a credit or a debit. \nUsage: A zero amount is considered to be a credit amount."
-        Type:
-          $ref: '#/components/schemas/OBExternalStatementInterestType1Code'
-        Amount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
-      required:
-      - CreditDebitIndicator
-      - Type
-      - Amount
-      additionalProperties: false
-    OBExternalStatementType1Code:
-      description: Statement type, in a coded form.
+    OBEntryStatus1Code:
+      description: Status of a transaction entry on the books of the account servicer.
       type: string
       enum:
-      - AccountClosure
-      - AccountOpening
-      - Annual
-      - Interim
-      - RegularPeriodic
-    Links:
-      type: object
-      description: Links relevant to the payload
-      properties:
-        Self:
-          type: string
-          format: uri
-        First:
-          type: string
-          format: uri
-        Prev:
-          type: string
-          format: uri
-        Next:
-          type: string
-          format: uri
-        Last:
-          type: string
-          format: uri
-      additionalProperties: false
-      required:
-      - Self
-    OBTransactionCashBalance:
-      description: Set of elements used to define the balance as a numerical representation of the net increases and decreases in an account after a transaction entry is applied to the account.
-      type: object
-      properties:
-        CreditDebitIndicator:
-          type: string
-          enum:
-          - Credit
-          - Debit
-          description: "Indicates whether the balance is a credit or a debit balance. \nUsage: A zero balance is considered to be a credit balance."
-        Type:
-          $ref: '#/components/schemas/OBBalanceType1Code'
-        Amount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
-      required:
-      - CreditDebitIndicator
-      - Type
-      - Amount
-      additionalProperties: false
-    OBSupplementaryData1:
-      description: Additional information that can not be captured in the structured fields and/or any other specific block.
-      type: object
-      properties: {}
-      additionalProperties: false
-    OBExternalStatementValueType1Code:
-      description: Statement value type, in a coded form.
+      - Booked
+      - Pending
+    OBExternalStatementBenefitType1Code:
+      description: Benefit type, in a coded form.
       type: string
       example:
-      - UK.OBIE.AirMilesPoints
-      - UK.OBIE.AirMilesPointsBalance
-      - UK.OBIE.Credits
-      - UK.OBIE.Debits
-      - UK.OBIE.HotelPoints
-      - UK.OBIE.HotelPointsBalance
-      - UK.OBIE.RetailShoppingPoints
-      - UK.OBIE.RetailShoppingPointsBalance
+      - UK.OBIE.Cashback
+      - UK.OBIE.Insurance
+      - UK.OBIE.TravelDiscount
+      - UK.OBIE.TravelInsurance
       minLength: 1
       maxLength: 40
+    ISODateTime:
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: string
+      format: date-time
+    OBBankTransactionCodeStructure1:
+      description: Set of elements used to fully identify the type of underlying transaction resulting in an entry.
+      type: object
+      properties:
+        Code:
+          description: Specifies the family within a domain.
+          type: string
+        SubCode:
+          description: Specifies the sub-product family within a specific family.
+          type: string
+      required:
+      - Code
+      - SubCode
+      additionalProperties: false
+    OBExternalFinancialInstitutionIdentification4Code:
+      description: Name of the identification scheme, in a coded form as published in an external list.
+      type: string
+      example:
+      - UK.OBIE.BICFI
+      minLength: 1
+      maxLength: 40
+    OBExternalStatementFeeType1Code:
+      description: Fee type, in a coded form.
+      type: string
+      example:
+      - UK.OBIE.Annual
+      - UK.OBIE.BalanceTransfer
+      - UK.OBIE.CashAdvance
+      - UK.OBIE.CashTransaction
+      - UK.OBIE.ForeignCashTransaction
+      - UK.OBIE.ForeignTransaction
+      - UK.OBIE.Gambling
+      - UK.OBIE.LatePayment
+      - UK.OBIE.MoneyTransfer
+      - UK.OBIE.Monthly
+      - UK.OBIE.Overlimit
+      - UK.OBIE.PostalOrder
+      - UK.OBIE.PrizeEntry
+      - UK.OBIE.StatementCopy
+      - UK.OBIE.Total
+      minLength: 1
+      maxLength: 40
+    OBReadTransaction4:
+      type: object
+      properties:
+        Data:
+          type: object
+          properties:
+            Transaction:
+              items:
+                $ref: '#/components/schemas/OBTransaction4'
+              type: array
+              description: Provides further details on an entry in the report.
+          additionalProperties: false
+        Links:
+          $ref: '#/components/schemas/Links'
+        Meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - Data
+      - Links
+      - Meta
+      additionalProperties: false
+    OBError1:
+      type: object
+      properties:
+        ErrorCode:
+          description: Low level textual error code, e.g., UK.OBIE.Field.Missing
+          type: string
+          minLength: 1
+          maxLength: 128
+        Message:
+          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
+
+            OBIE doesn''t standardise this field'
+          type: string
+          minLength: 1
+          maxLength: 500
+        Path:
+          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
+          type: string
+          minLength: 1
+          maxLength: 500
+        Url:
+          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
+          type: string
+      required:
+      - ErrorCode
+      - Message
+      additionalProperties: false
+      minProperties: 1
+    OBReadStatement1:
+      type: object
+      properties:
+        Data:
+          type: object
+          properties:
+            Statement:
+              items:
+                $ref: '#/components/schemas/OBStatement1'
+              type: array
+              description: Provides further details on a statement resource.
+          additionalProperties: false
+        Links:
+          $ref: '#/components/schemas/Links'
+        Meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - Data
+      - Links
+      - Meta
+      additionalProperties: false
+    OBAddressTypeCode:
+      description: Identifies the nature of the postal address.
+      type: string
+      enum:
+      - Business
+      - Correspondence
+      - DeliveryTo
+      - MailTo
+      - POBox
+      - Postal
+      - Residential
+      - Statement
     OBBranchAndFinancialInstitutionIdentification6:
       description: Financial institution servicing an account for the debtor.
       type: object
@@ -316,82 +453,24 @@ components:
         PostalAddress:
           $ref: '#/components/schemas/OBPostalAddress6'
       additionalProperties: false
-    OBExternalStatementInterestType1Code:
-      description: Interest amount type, in a coded form.
-      type: string
-      example:
-      - UK.OBIE.BalanceTransfer
-      - UK.OBIE.Cash
-      - UK.OBIE.EstimatedNext
-      - UK.OBIE.Purchase
-      - UK.OBIE.Total
-      minLength: 1
-      maxLength: 40
-    OBStatementFee1:
-      description: Set of elements used to provide details of a fee for the statement resource.
-      type: object
-      properties:
-        CreditDebitIndicator:
-          type: string
-          enum:
-          - Credit
-          - Debit
-          description: "Indicates whether the amount is a credit or a debit. \nUsage: A zero amount is considered to be a credit amount."
-        Type:
-          $ref: '#/components/schemas/OBExternalStatementFeeType1Code'
-        Amount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
-      required:
-      - CreditDebitIndicator
-      - Type
-      - Amount
-      additionalProperties: false
-    OBCashAccount6:
-      description: Unambiguous identification of the account of the debtor, in the case of a crebit transaction.
-      type: object
-      properties:
-        SchemeName:
-          $ref: '#/components/schemas/OBExternalAccountIdentification4Code'
-        Identification:
-          description: Identification assigned by an institution to identify an account. This identification is known by the account owner.
-          type: string
-          minLength: 1
-          maxLength: 256
-        Name:
-          description: 'Name of the account, as assigned by the account servicing institution.
-
-            Usage: The account name is the name or names of the account owner(s) represented at an account level. The account name is not the product name or the nickname of the account.'
-          type: string
-          minLength: 1
-          maxLength: 70
-        SecondaryIdentification:
-          description: "This is secondary identification of the account, as assigned by the account servicing institution. \nThis can be used by building societies to additionally identify accounts with a roll number (in addition to a sort code and account number combination)."
-          type: string
-          minLength: 1
-          maxLength: 34
-      additionalProperties: false
-    OBExternalCardAuthorisationType1Code:
-      description: The card authorisation type.
+    OBBalanceType1Code:
+      description: Balance type, in a coded form.
       type: string
       enum:
-      - ConsumerDevice
-      - Contactless
-      - None
-      - PIN
-    Meta:
-      title: MetaData
-      type: object
-      description: Meta Data relevant to the payload
-      properties:
-        TotalPages:
-          type: integer
-          format: int32
-        FirstAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-        LastAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-      additionalProperties: false
-    OBStatement1Detail:
+      - ClosingAvailable
+      - ClosingBooked
+      - ClosingCleared
+      - Expected
+      - ForwardAvailable
+      - Information
+      - InterimAvailable
+      - InterimBooked
+      - InterimCleared
+      - OpeningAvailable
+      - OpeningBooked
+      - OpeningCleared
+      - PreviouslyClosedBooked
+    OBStatement1Basic:
       description: Provides further details on a statement resource.
       type: object
       properties:
@@ -458,11 +537,6 @@ components:
             $ref: '#/components/schemas/OBStatementValue1'
           type: array
           description: Set of elements used to provide details of a generic number value related to the statement resource.
-        StatementAmount:
-          items:
-            $ref: '#/components/schemas/OBStatementAmount1'
-          type: array
-          description: Set of elements used to provide details of a generic amount for the statement resource.
       required:
       - AccountId
       - Type
@@ -470,95 +544,6 @@ components:
       - EndDateTime
       - CreationDateTime
       additionalProperties: false
-    OBStatementBenefit1:
-      description: Set of elements used to provide details of a benefit or reward amount for the statement resource.
-      type: object
-      properties:
-        Type:
-          $ref: '#/components/schemas/OBExternalStatementBenefitType1Code'
-        Amount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
-      required:
-      - Type
-      - Amount
-      additionalProperties: false
-    OBError1:
-      type: object
-      properties:
-        ErrorCode:
-          description: Low level textual error code, e.g., UK.OBIE.Field.Missing
-          type: string
-          minLength: 1
-          maxLength: 128
-        Message:
-          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
-
-            OBIE doesn''t standardise this field'
-          type: string
-          minLength: 1
-          maxLength: 500
-        Path:
-          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
-          type: string
-          minLength: 1
-          maxLength: 500
-        Url:
-          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
-          type: string
-      required:
-      - ErrorCode
-      - Message
-      additionalProperties: false
-      minProperties: 1
-    OBBankTransactionCodeStructure1:
-      description: Set of elements used to fully identify the type of underlying transaction resulting in an entry.
-      type: object
-      properties:
-        Code:
-          description: Specifies the family within a domain.
-          type: string
-        SubCode:
-          description: Specifies the sub-product family within a specific family.
-          type: string
-      required:
-      - Code
-      - SubCode
-      additionalProperties: false
-    OBStatementAmount1:
-      description: Set of elements used to provide details of a generic amount for the statement resource.
-      type: object
-      properties:
-        CreditDebitIndicator:
-          type: string
-          enum:
-          - Credit
-          - Debit
-          description: "Indicates whether the amount is a credit or a debit. \nUsage: A zero amount is considered to be a credit amount."
-        Type:
-          $ref: '#/components/schemas/OBExternalStatementAmountType1Code'
-        Amount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
-      required:
-      - CreditDebitIndicator
-      - Type
-      - Amount
-      additionalProperties: false
-    OBExternalStatementRateType1Code:
-      description: Statement rate type, in a coded form.
-      type: string
-      example:
-      - UK.OBIE.AnnualBalanceTransfer
-      - UK.OBIE.AnnualBalanceTransferAfterPromo
-      - UK.OBIE.AnnualBalanceTransferPromo
-      - UK.OBIE.AnnualCash
-      - UK.OBIE.AnnualPurchase
-      - UK.OBIE.AnnualPurchaseAfterPromo
-      - UK.OBIE.AnnualPurchasePromo
-      - UK.OBIE.MonthlyBalanceTransfer
-      - UK.OBIE.MonthlyCash
-      - UK.OBIE.MonthlyPurchase
-      minLength: 1
-      maxLength: 40
     OBMerchantDetails1:
       description: Details of the merchant involved in the transaction.
       type: object
@@ -574,6 +559,17 @@ components:
           minLength: 3
           maxLength: 4
       additionalProperties: false
+    OBExternalAccountIdentification4Code:
+      description: Name of the identification scheme, in a coded form as published in an external list.
+      type: string
+      example:
+      - UK.OBIE.BBAN
+      - UK.OBIE.IBAN
+      - UK.OBIE.PAN
+      - UK.OBIE.Paym
+      - UK.OBIE.SortCodeAccountNumber
+      minLength: 1
+      maxLength: 40
     OBCurrencyExchange5:
       description: Set of elements used to provide details on the currency exchange.
       type: object
@@ -610,146 +606,66 @@ components:
       - SourceCurrency
       - ExchangeRate
       additionalProperties: false
-    TransactionInformation:
-      description: "Further details of the transaction. \nThis is the transaction narrative, which is unstructured text."
+    OBExternalCardSchemeType1Code:
+      description: Name of the card scheme.
       type: string
-      minLength: 1
-      maxLength: 500
-    OBErrorResponse1:
-      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+      enum:
+      - AmericanExpress
+      - Diners
+      - Discover
+      - MasterCard
+      - VISA
+    OBStatementAmount1:
+      description: Set of elements used to provide details of a generic amount for the statement resource.
       type: object
       properties:
-        Code:
-          description: High level textual error code, to help categorize the errors.
-          type: string
-          minLength: 1
-          maxLength: 40
-        Id:
-          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
-          type: string
-          minLength: 1
-          maxLength: 40
-        Message:
-          description: Brief Error message, e.g., 'There is something wrong with the request parameters provided'
-          type: string
-          minLength: 1
-          maxLength: 500
-        Errors:
-          items:
-            $ref: '#/components/schemas/OBError1'
-          type: array
-          minItems: 1
-      required:
-      - Code
-      - Message
-      - Errors
-      additionalProperties: false
-    OBTransaction4Basic:
-      description: Provides further details on an entry in the report.
-      type: object
-      properties:
-        AccountId:
-          $ref: '#/components/schemas/AccountId'
-        TransactionId:
-          description: Unique identifier for the transaction within an servicing institution. This identifier is both unique and immutable.
-          type: string
-          minLength: 1
-          maxLength: 40
-        TransactionReference:
-          description: Unique reference for the transaction. This reference is optionally populated, and may as an example be the FPID in the Faster Payments context.
-          type: string
-          minLength: 1
-          maxLength: 35
-        StatementReference:
-          items:
-            type: string
-            minLength: 1
-            maxLength: 35
-          type: array
-          description: Unique reference for the statement. This reference may be optionally populated if available.
         CreditDebitIndicator:
           type: string
           enum:
           - Credit
           - Debit
-          description: Indicates whether the transaction is a credit or a debit entry.
-        Status:
-          $ref: '#/components/schemas/OBEntryStatus1Code'
-        BookingDateTime:
-          description: "Date and time when a transaction entry is posted to an account on the account servicer's books.\nUsage: Booking date is the expected booking date, unless the status is booked, in which case it is the actual booking date.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-          type: string
-          format: date-time
-        ValueDateTime:
-          description: "Date and time at which assets become available to the account owner in case of a credit entry, or cease to be available to the account owner in case of a debit transaction entry.\nUsage: If transaction entry status is pending and value date is present, then the value date refers to an expected/requested value date.\nFor transaction entries subject to availability/float and for which availability information is provided, the value date must not be used. In this case the availability component identifies the number of availability days.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-          type: string
-          format: date-time
-        AddressLine:
-          description: Information that locates and identifies a specific address for a transaction entry, that is presented in free format text.
+          description: "Indicates whether the amount is a credit or a debit. \nUsage: A zero amount is considered to be a credit amount."
+        Type:
+          $ref: '#/components/schemas/OBExternalStatementAmountType1Code'
+        Amount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
+      required:
+      - CreditDebitIndicator
+      - Type
+      - Amount
+      additionalProperties: false
+    OBExternalStatementInterestType1Code:
+      description: Interest amount type, in a coded form.
+      type: string
+      example:
+      - UK.OBIE.BalanceTransfer
+      - UK.OBIE.Cash
+      - UK.OBIE.EstimatedNext
+      - UK.OBIE.Purchase
+      - UK.OBIE.Total
+      minLength: 1
+      maxLength: 40
+    OBTransactionCardInstrument1:
+      description: Set of elements to describe the card instrument used in the transaction.
+      type: object
+      properties:
+        CardSchemeName:
+          $ref: '#/components/schemas/OBExternalCardSchemeType1Code'
+        AuthorisationType:
+          $ref: '#/components/schemas/OBExternalCardAuthorisationType1Code'
+        Name:
+          description: Name of the cardholder using the card instrument.
           type: string
           minLength: 1
           maxLength: 70
-        Amount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
-        ChargeAmount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
-        CurrencyExchange:
-          $ref: '#/components/schemas/OBCurrencyExchange5'
-        BankTransactionCode:
-          $ref: '#/components/schemas/OBBankTransactionCodeStructure1'
-        ProprietaryBankTransactionCode:
-          description: Set of elements to fully identify a proprietary bank transaction code.
-          type: object
-          properties:
-            Code:
-              description: Proprietary bank transaction code to identify the underlying transaction.
-              type: string
-              minLength: 1
-              maxLength: 35
-            Issuer:
-              description: Identification of the issuer of the proprietary bank transaction code.
-              type: string
-              minLength: 1
-              maxLength: 35
-          required:
-          - Code
-          additionalProperties: false
-        CardInstrument:
-          $ref: '#/components/schemas/OBTransactionCardInstrument1'
-        SupplementaryData:
-          $ref: '#/components/schemas/OBSupplementaryData1'
-      required:
-      - AccountId
-      - CreditDebitIndicator
-      - Status
-      - BookingDateTime
-      - Amount
-      additionalProperties: false
-    OBActiveOrHistoricCurrencyAndAmount:
-      description: Amount of money of the cash balance after a transaction entry is applied to the account..
-      type: object
-      properties:
-        Amount:
-          $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
-        Currency:
-          description: A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 "Codes for the representation of currencies and funds".
+        Identification:
+          description: Identification assigned by an institution to identify the card instrument used in the transaction. This identification is known by the account owner, and may be masked.
           type: string
-          pattern: ^[A-Z]{3,3}$
+          minLength: 1
+          maxLength: 34
       required:
-      - Amount
-      - Currency
+      - CardSchemeName
       additionalProperties: false
-    OBAddressTypeCode:
-      description: Identifies the nature of the postal address.
-      type: string
-      enum:
-      - Business
-      - Correspondence
-      - DeliveryTo
-      - MailTo
-      - POBox
-      - Postal
-      - Residential
-      - Statement
     OBStatementRate1:
       description: Set of elements used to provide details of a generic rate related to the statement resource.
       type: object
@@ -766,27 +682,37 @@ components:
       - Rate
       - Type
       additionalProperties: false
-    OBReadStatement1:
+    Links:
       type: object
+      description: Links relevant to the payload
       properties:
-        Data:
-          type: object
-          properties:
-            Statement:
-              items:
-                $ref: '#/components/schemas/OBStatement1'
-              type: array
-              description: Provides further details on a statement resource.
-          additionalProperties: false
-        Links:
-          $ref: '#/components/schemas/Links'
-        Meta:
-          $ref: '#/components/schemas/Meta'
-      required:
-      - Data
-      - Links
-      - Meta
+        Self:
+          type: string
+          format: uri
+        First:
+          type: string
+          format: uri
+        Prev:
+          type: string
+          format: uri
+        Next:
+          type: string
+          format: uri
+        Last:
+          type: string
+          format: uri
       additionalProperties: false
+      required:
+      - Self
+    OBSupplementaryData1:
+      description: Additional information that can not be captured in the structured fields and/or any other specific block.
+      type: object
+      properties: {}
+      additionalProperties: false
+    OBTransaction4:
+      oneOf:
+      - $ref: '#/components/schemas/OBTransaction4Basic'
+      - $ref: '#/components/schemas/OBTransaction4Detail'
     OBStatementDateTime1:
       description: Set of elements used to provide details of a generic date time for the statement resource.
       type: object
@@ -801,10 +727,40 @@ components:
       - DateTime
       - Type
       additionalProperties: false
-    ISODateTime:
-      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+    OBExternalStatementAmountType1Code:
+      description: Amount type, in a coded form.
       type: string
-      format: date-time
+      example:
+      - UK.OBIE.ArrearsClosingBalance
+      - UK.OBIE.AvailableBalance
+      - UK.OBIE.AverageBalanceWhenInCredit
+      - UK.OBIE.AverageBalanceWhenInDebit
+      - UK.OBIE.AverageDailyBalance
+      - UK.OBIE.BalanceTransferClosingBalance
+      - UK.OBIE.CashClosingBalance
+      - UK.OBIE.ClosingBalance
+      - UK.OBIE.CreditLimit
+      - UK.OBIE.CurrentPayment
+      - UK.OBIE.DirectDebitPaymentDue
+      - UK.OBIE.FSCSInsurance
+      - UK.OBIE.MinimumPaymentDue
+      - UK.OBIE.PendingTransactionsBalance
+      - UK.OBIE.PreviousClosingBalance
+      - UK.OBIE.PreviousPayment
+      - UK.OBIE.PurchaseClosingBalance
+      - UK.OBIE.StartingBalance
+      - UK.OBIE.TotalAdjustments
+      - UK.OBIE.TotalCashAdvances
+      - UK.OBIE.TotalCharges
+      - UK.OBIE.TotalCredits
+      - UK.OBIE.TotalDebits
+      - UK.OBIE.TotalPurchases
+      minLength: 1
+      maxLength: 40
+    OBStatement1:
+      oneOf:
+      - $ref: '#/components/schemas/OBStatement1Basic'
+      - $ref: '#/components/schemas/OBStatement1Detail'
     OBTransaction4Detail:
       description: Provides further details on an entry in the report.
       type: object
@@ -899,74 +855,353 @@ components:
       - BookingDateTime
       - Amount
       additionalProperties: false
-    OBExternalCardSchemeType1Code:
-      description: Name of the card scheme.
+    OBActiveCurrencyAndAmount_SimpleType:
+      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
       type: string
-      enum:
-      - AmericanExpress
-      - Diners
-      - Discover
-      - MasterCard
-      - VISA
-    OBExternalStatementAmountType1Code:
-      description: Amount type, in a coded form.
-      type: string
-      example:
-      - UK.OBIE.ArrearsClosingBalance
-      - UK.OBIE.AvailableBalance
-      - UK.OBIE.AverageBalanceWhenInCredit
-      - UK.OBIE.AverageBalanceWhenInDebit
-      - UK.OBIE.AverageDailyBalance
-      - UK.OBIE.BalanceTransferClosingBalance
-      - UK.OBIE.CashClosingBalance
-      - UK.OBIE.ClosingBalance
-      - UK.OBIE.CreditLimit
-      - UK.OBIE.CurrentPayment
-      - UK.OBIE.DirectDebitPaymentDue
-      - UK.OBIE.FSCSInsurance
-      - UK.OBIE.MinimumPaymentDue
-      - UK.OBIE.PendingTransactionsBalance
-      - UK.OBIE.PreviousClosingBalance
-      - UK.OBIE.PreviousPayment
-      - UK.OBIE.PurchaseClosingBalance
-      - UK.OBIE.StartingBalance
-      - UK.OBIE.TotalAdjustments
-      - UK.OBIE.TotalCashAdvances
-      - UK.OBIE.TotalCharges
-      - UK.OBIE.TotalCredits
-      - UK.OBIE.TotalDebits
-      - UK.OBIE.TotalPurchases
-      minLength: 1
-      maxLength: 40
-    OBReadTransaction4:
+      pattern: ^\d{1,13}\.\d{1,5}$
+    OBStatementBenefit1:
+      description: Set of elements used to provide details of a benefit or reward amount for the statement resource.
       type: object
       properties:
-        Data:
+        Type:
+          $ref: '#/components/schemas/OBExternalStatementBenefitType1Code'
+        Amount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
+      required:
+      - Type
+      - Amount
+      additionalProperties: false
+    OBPostalAddress6:
+      description: Information that locates and identifies a specific address, as defined by postal services.
+      type: object
+      properties:
+        AddressType:
+          $ref: '#/components/schemas/OBAddressTypeCode'
+        Department:
+          description: Identification of a division of a large organisation or building.
+          type: string
+          minLength: 1
+          maxLength: 70
+        SubDepartment:
+          description: Identification of a sub-division of a large organisation or building.
+          type: string
+          minLength: 1
+          maxLength: 70
+        StreetName:
+          description: Name of a street or thoroughfare.
+          type: string
+          minLength: 1
+          maxLength: 70
+        BuildingNumber:
+          description: Number that identifies the position of a building on a street.
+          type: string
+          minLength: 1
+          maxLength: 16
+        PostCode:
+          description: Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
+          type: string
+          minLength: 1
+          maxLength: 16
+        TownName:
+          description: Name of a built-up area, with defined boundaries, and a local government.
+          type: string
+          minLength: 1
+          maxLength: 35
+        CountrySubDivision:
+          description: Identifies a subdivision of a country such as state, region, county.
+          type: string
+          minLength: 1
+          maxLength: 35
+        Country:
+          description: Nation with its own government.
+          type: string
+          pattern: ^[A-Z]{2,2}$
+        AddressLine:
+          items:
+            type: string
+            minLength: 1
+            maxLength: 70
+          type: array
+          description: Information that locates and identifies a specific address, as defined by postal services, presented in free format text.
+          minItems: 0
+          maxItems: 7
+      additionalProperties: false
+    OBActiveOrHistoricCurrencyAndAmount:
+      description: Amount of money of the cash balance after a transaction entry is applied to the account..
+      type: object
+      properties:
+        Amount:
+          $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
+        Currency:
+          description: A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 "Codes for the representation of currencies and funds".
+          type: string
+          pattern: ^[A-Z]{3,3}$
+      required:
+      - Amount
+      - Currency
+      additionalProperties: false
+    Meta:
+      title: MetaData
+      type: object
+      description: Meta Data relevant to the payload
+      properties:
+        TotalPages:
+          type: integer
+          format: int32
+        FirstAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+        LastAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+      additionalProperties: false
+    OBErrorResponse1:
+      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+      type: object
+      properties:
+        Code:
+          description: High level textual error code, to help categorize the errors.
+          type: string
+          minLength: 1
+          maxLength: 40
+        Id:
+          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
+          type: string
+          minLength: 1
+          maxLength: 40
+        Message:
+          description: Brief Error message, e.g., 'There is something wrong with the request parameters provided'
+          type: string
+          minLength: 1
+          maxLength: 500
+        Errors:
+          items:
+            $ref: '#/components/schemas/OBError1'
+          type: array
+          minItems: 1
+      required:
+      - Code
+      - Message
+      - Errors
+      additionalProperties: false
+    OBStatementFee1:
+      description: Set of elements used to provide details of a fee for the statement resource.
+      type: object
+      properties:
+        CreditDebitIndicator:
+          type: string
+          enum:
+          - Credit
+          - Debit
+          description: "Indicates whether the amount is a credit or a debit. \nUsage: A zero amount is considered to be a credit amount."
+        Type:
+          $ref: '#/components/schemas/OBExternalStatementFeeType1Code'
+        Amount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
+      required:
+      - CreditDebitIndicator
+      - Type
+      - Amount
+      additionalProperties: false
+    OBTransaction4Basic:
+      description: Provides further details on an entry in the report.
+      type: object
+      properties:
+        AccountId:
+          $ref: '#/components/schemas/AccountId'
+        TransactionId:
+          description: Unique identifier for the transaction within an servicing institution. This identifier is both unique and immutable.
+          type: string
+          minLength: 1
+          maxLength: 40
+        TransactionReference:
+          description: Unique reference for the transaction. This reference is optionally populated, and may as an example be the FPID in the Faster Payments context.
+          type: string
+          minLength: 1
+          maxLength: 35
+        StatementReference:
+          items:
+            type: string
+            minLength: 1
+            maxLength: 35
+          type: array
+          description: Unique reference for the statement. This reference may be optionally populated if available.
+        CreditDebitIndicator:
+          type: string
+          enum:
+          - Credit
+          - Debit
+          description: Indicates whether the transaction is a credit or a debit entry.
+        Status:
+          $ref: '#/components/schemas/OBEntryStatus1Code'
+        BookingDateTime:
+          description: "Date and time when a transaction entry is posted to an account on the account servicer's books.\nUsage: Booking date is the expected booking date, unless the status is booked, in which case it is the actual booking date.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+          type: string
+          format: date-time
+        ValueDateTime:
+          description: "Date and time at which assets become available to the account owner in case of a credit entry, or cease to be available to the account owner in case of a debit transaction entry.\nUsage: If transaction entry status is pending and value date is present, then the value date refers to an expected/requested value date.\nFor transaction entries subject to availability/float and for which availability information is provided, the value date must not be used. In this case the availability component identifies the number of availability days.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+          type: string
+          format: date-time
+        AddressLine:
+          description: Information that locates and identifies a specific address for a transaction entry, that is presented in free format text.
+          type: string
+          minLength: 1
+          maxLength: 70
+        Amount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
+        ChargeAmount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
+        CurrencyExchange:
+          $ref: '#/components/schemas/OBCurrencyExchange5'
+        BankTransactionCode:
+          $ref: '#/components/schemas/OBBankTransactionCodeStructure1'
+        ProprietaryBankTransactionCode:
+          description: Set of elements to fully identify a proprietary bank transaction code.
           type: object
           properties:
-            Transaction:
-              items:
-                $ref: '#/components/schemas/OBTransaction4'
-              type: array
-              description: Provides further details on an entry in the report.
+            Code:
+              description: Proprietary bank transaction code to identify the underlying transaction.
+              type: string
+              minLength: 1
+              maxLength: 35
+            Issuer:
+              description: Identification of the issuer of the proprietary bank transaction code.
+              type: string
+              minLength: 1
+              maxLength: 35
+          required:
+          - Code
           additionalProperties: false
-        Links:
-          $ref: '#/components/schemas/Links'
-        Meta:
-          $ref: '#/components/schemas/Meta'
+        CardInstrument:
+          $ref: '#/components/schemas/OBTransactionCardInstrument1'
+        SupplementaryData:
+          $ref: '#/components/schemas/OBSupplementaryData1'
       required:
-      - Data
-      - Links
-      - Meta
+      - AccountId
+      - CreditDebitIndicator
+      - Status
+      - BookingDateTime
+      - Amount
       additionalProperties: false
-    OBExternalFinancialInstitutionIdentification4Code:
-      description: Name of the identification scheme, in a coded form as published in an external list.
+    OBExternalStatementValueType1Code:
+      description: Statement value type, in a coded form.
       type: string
       example:
-      - UK.OBIE.BICFI
+      - UK.OBIE.AirMilesPoints
+      - UK.OBIE.AirMilesPointsBalance
+      - UK.OBIE.Credits
+      - UK.OBIE.Debits
+      - UK.OBIE.HotelPoints
+      - UK.OBIE.HotelPointsBalance
+      - UK.OBIE.RetailShoppingPoints
+      - UK.OBIE.RetailShoppingPointsBalance
       minLength: 1
       maxLength: 40
-    OBStatement1Basic:
+    OBStatementValue1:
+      description: Set of elements used to provide details of a generic number value related to the statement resource.
+      type: object
+      properties:
+        Value:
+          description: Value associated with the statement value type.
+          type: integer
+          format: int32
+        Type:
+          $ref: '#/components/schemas/OBExternalStatementValueType1Code'
+      required:
+      - Value
+      - Type
+      additionalProperties: false
+    OBExternalStatementType1Code:
+      description: Statement type, in a coded form.
+      type: string
+      enum:
+      - AccountClosure
+      - AccountOpening
+      - Annual
+      - Interim
+      - RegularPeriodic
+    OBCashAccount6:
+      description: Unambiguous identification of the account of the debtor, in the case of a crebit transaction.
+      type: object
+      properties:
+        SchemeName:
+          $ref: '#/components/schemas/OBExternalAccountIdentification4Code'
+        Identification:
+          description: Identification assigned by an institution to identify an account. This identification is known by the account owner.
+          type: string
+          minLength: 1
+          maxLength: 256
+        Name:
+          description: 'Name of the account, as assigned by the account servicing institution.
+
+            Usage: The account name is the name or names of the account owner(s) represented at an account level. The account name is not the product name or the nickname of the account.'
+          type: string
+          minLength: 1
+          maxLength: 70
+        SecondaryIdentification:
+          description: "This is secondary identification of the account, as assigned by the account servicing institution. \nThis can be used by building societies to additionally identify accounts with a roll number (in addition to a sort code and account number combination)."
+          type: string
+          minLength: 1
+          maxLength: 34
+      additionalProperties: false
+    OBExternalStatementRateType1Code:
+      description: Statement rate type, in a coded form.
+      type: string
+      example:
+      - UK.OBIE.AnnualBalanceTransfer
+      - UK.OBIE.AnnualBalanceTransferAfterPromo
+      - UK.OBIE.AnnualBalanceTransferPromo
+      - UK.OBIE.AnnualCash
+      - UK.OBIE.AnnualPurchase
+      - UK.OBIE.AnnualPurchaseAfterPromo
+      - UK.OBIE.AnnualPurchasePromo
+      - UK.OBIE.MonthlyBalanceTransfer
+      - UK.OBIE.MonthlyCash
+      - UK.OBIE.MonthlyPurchase
+      minLength: 1
+      maxLength: 40
+    TransactionInformation:
+      description: "Further details of the transaction. \nThis is the transaction narrative, which is unstructured text."
+      type: string
+      minLength: 1
+      maxLength: 500
+    OBTransactionCashBalance:
+      description: Set of elements used to define the balance as a numerical representation of the net increases and decreases in an account after a transaction entry is applied to the account.
+      type: object
+      properties:
+        CreditDebitIndicator:
+          type: string
+          enum:
+          - Credit
+          - Debit
+          description: "Indicates whether the balance is a credit or a debit balance. \nUsage: A zero balance is considered to be a credit balance."
+        Type:
+          $ref: '#/components/schemas/OBBalanceType1Code'
+        Amount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
+      required:
+      - CreditDebitIndicator
+      - Type
+      - Amount
+      additionalProperties: false
+    AccountId:
+      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
+      type: string
+      minLength: 1
+      maxLength: 40
+    OBExternalStatementDateTimeType1Code:
+      description: Date time type, in a coded form.
+      type: string
+      example:
+      - UK.OBIE.BalanceTransferPromoEnd
+      - UK.OBIE.DirectDebitDue
+      - UK.OBIE.LastPayment
+      - UK.OBIE.LastStatement
+      - UK.OBIE.NextStatement
+      - UK.OBIE.PaymentDue
+      - UK.OBIE.PurchasePromoEnd
+      - UK.OBIE.StatementAvailable
+      minLength: 1
+      maxLength: 40
+    OBStatement1Detail:
       description: Provides further details on a statement resource.
       type: object
       properties:
@@ -1033,6 +1268,11 @@ components:
             $ref: '#/components/schemas/OBStatementValue1'
           type: array
           description: Set of elements used to provide details of a generic number value related to the statement resource.
+        StatementAmount:
+          items:
+            $ref: '#/components/schemas/OBStatementAmount1'
+          type: array
+          description: Set of elements used to provide details of a generic amount for the statement resource.
       required:
       - AccountId
       - Type
@@ -1040,285 +1280,49 @@ components:
       - EndDateTime
       - CreationDateTime
       additionalProperties: false
-    OBExternalStatementDateTimeType1Code:
-      description: Date time type, in a coded form.
-      type: string
-      example:
-      - UK.OBIE.BalanceTransferPromoEnd
-      - UK.OBIE.DirectDebitDue
-      - UK.OBIE.LastPayment
-      - UK.OBIE.LastStatement
-      - UK.OBIE.NextStatement
-      - UK.OBIE.PaymentDue
-      - UK.OBIE.PurchasePromoEnd
-      - UK.OBIE.StatementAvailable
-      minLength: 1
-      maxLength: 40
-    OBExternalStatementFeeType1Code:
-      description: Fee type, in a coded form.
-      type: string
-      example:
-      - UK.OBIE.Annual
-      - UK.OBIE.BalanceTransfer
-      - UK.OBIE.CashAdvance
-      - UK.OBIE.CashTransaction
-      - UK.OBIE.ForeignCashTransaction
-      - UK.OBIE.ForeignTransaction
-      - UK.OBIE.Gambling
-      - UK.OBIE.LatePayment
-      - UK.OBIE.MoneyTransfer
-      - UK.OBIE.Monthly
-      - UK.OBIE.Overlimit
-      - UK.OBIE.PostalOrder
-      - UK.OBIE.PrizeEntry
-      - UK.OBIE.StatementCopy
-      - UK.OBIE.Total
-      minLength: 1
-      maxLength: 40
-    OBStatementValue1:
-      description: Set of elements used to provide details of a generic number value related to the statement resource.
+    OBStatementInterest1:
+      description: Set of elements used to provide details of a generic interest amount related to the statement resource.
       type: object
       properties:
-        Value:
-          description: Value associated with the statement value type.
-          type: integer
-          format: int32
+        CreditDebitIndicator:
+          type: string
+          enum:
+          - Credit
+          - Debit
+          description: "Indicates whether the amount is a credit or a debit. \nUsage: A zero amount is considered to be a credit amount."
         Type:
-          $ref: '#/components/schemas/OBExternalStatementValueType1Code'
+          $ref: '#/components/schemas/OBExternalStatementInterestType1Code'
+        Amount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount'
       required:
-      - Value
+      - CreditDebitIndicator
       - Type
+      - Amount
       additionalProperties: false
-    OBBalanceType1Code:
-      description: Balance type, in a coded form.
+    OBExternalCardAuthorisationType1Code:
+      description: The card authorisation type.
       type: string
       enum:
-      - ClosingAvailable
-      - ClosingBooked
-      - ClosingCleared
-      - Expected
-      - ForwardAvailable
-      - Information
-      - InterimAvailable
-      - InterimBooked
-      - InterimCleared
-      - OpeningAvailable
-      - OpeningBooked
-      - OpeningCleared
-      - PreviouslyClosedBooked
-    OBExternalAccountIdentification4Code:
-      description: Name of the identification scheme, in a coded form as published in an external list.
-      type: string
-      example:
-      - UK.OBIE.BBAN
-      - UK.OBIE.IBAN
-      - UK.OBIE.PAN
-      - UK.OBIE.Paym
-      - UK.OBIE.SortCodeAccountNumber
-      minLength: 1
-      maxLength: 40
-    OBPostalAddress6:
-      description: Information that locates and identifies a specific address, as defined by postal services.
-      type: object
-      properties:
-        AddressType:
-          $ref: '#/components/schemas/OBAddressTypeCode'
-        Department:
-          description: Identification of a division of a large organisation or building.
-          type: string
-          minLength: 1
-          maxLength: 70
-        SubDepartment:
-          description: Identification of a sub-division of a large organisation or building.
-          type: string
-          minLength: 1
-          maxLength: 70
-        StreetName:
-          description: Name of a street or thoroughfare.
-          type: string
-          minLength: 1
-          maxLength: 70
-        BuildingNumber:
-          description: Number that identifies the position of a building on a street.
-          type: string
-          minLength: 1
-          maxLength: 16
-        PostCode:
-          description: Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
-          type: string
-          minLength: 1
-          maxLength: 16
-        TownName:
-          description: Name of a built-up area, with defined boundaries, and a local government.
-          type: string
-          minLength: 1
-          maxLength: 35
-        CountrySubDivision:
-          description: Identifies a subdivision of a country such as state, region, county.
-          type: string
-          minLength: 1
-          maxLength: 35
-        Country:
-          description: Nation with its own government.
-          type: string
-          pattern: ^[A-Z]{2,2}$
-        AddressLine:
-          items:
-            type: string
-            minLength: 1
-            maxLength: 70
-          type: array
-          description: Information that locates and identifies a specific address, as defined by postal services, presented in free format text.
-          minItems: 0
-          maxItems: 7
-      additionalProperties: false
-    OBTransaction4:
-      oneOf:
-      - $ref: '#/components/schemas/OBTransaction4Basic'
-      - $ref: '#/components/schemas/OBTransaction4Detail'
-    OBActiveCurrencyAndAmount_SimpleType:
-      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
-      type: string
-      pattern: ^\d{1,13}\.\d{1,5}$
-    OBEntryStatus1Code:
-      description: Status of a transaction entry on the books of the account servicer.
-      type: string
-      enum:
-      - Booked
-      - Pending
-    OBExternalStatementBenefitType1Code:
-      description: Benefit type, in a coded form.
-      type: string
-      example:
-      - UK.OBIE.Cashback
-      - UK.OBIE.Insurance
-      - UK.OBIE.TravelDiscount
-      - UK.OBIE.TravelInsurance
-      minLength: 1
-      maxLength: 40
-    OBTransactionCardInstrument1:
-      description: Set of elements to describe the card instrument used in the transaction.
-      type: object
-      properties:
-        CardSchemeName:
-          $ref: '#/components/schemas/OBExternalCardSchemeType1Code'
-        AuthorisationType:
-          $ref: '#/components/schemas/OBExternalCardAuthorisationType1Code'
-        Name:
-          description: Name of the cardholder using the card instrument.
-          type: string
-          minLength: 1
-          maxLength: 70
-        Identification:
-          description: Identification assigned by an institution to identify the card instrument used in the transaction. This identification is known by the account owner, and may be masked.
-          type: string
-          minLength: 1
-          maxLength: 34
-      required:
-      - CardSchemeName
-      additionalProperties: false
-    OBStatement1:
-      oneOf:
-      - $ref: '#/components/schemas/OBStatement1Basic'
-      - $ref: '#/components/schemas/OBStatement1Detail'
-  responses:
-    200AccountsAccountIdStatementsStatementIdFileRead:
-      description: Statements Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-      content:
-        '*/*':
-          schema:
-            type: string
-            format: binary
-    401ErrorResponse:
-      description: Unauthorized
-    200AccountsAccountIdStatementsRead:
-      description: Statements Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBReadStatement1'
-    429ErrorResponse:
-      description: Too Many Requests
-      headers:
-        Retry-After:
-          description: Number in seconds to wait
-          schema:
-            type: integer
-    500ErrorResponse:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-    200AccountsAccountIdStatementsStatementIdTransactionsRead:
-      description: Transactions Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBReadTransaction4'
-    405ErrorResponse:
-      description: Method Not Allowed
-    400ErrorResponse:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-    200StatementsRead:
-      description: Statements Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBReadStatement1'
-    406ErrorResponse:
-      description: Not Acceptable
-    200AccountsAccountIdStatementsStatementIdRead:
-      description: Statements Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBReadStatement1'
-    404ErrorResponse:
-      description: Not found
-    403ErrorResponse:
-      description: Forbidden
+      - ConsumerDevice
+      - Contactless
+      - None
+      - PIN
   parameters:
-    ToStatementDateTimeParam:
-      in: query
-      name: toStatementDateTime
-      description: 'The UTC ISO 8601 Date Time to filter statements TO
-
-        NB Time component is optional - set to 00:00:00 for just Date.
-
-        If the Date Time contains a timezone, the ASPSP must ignore the timezone component.'
+    x-fapi-customer-last-logged-time-Param:
+      in: header
+      name: x-fapi-customer-last-logged-time
+      required: false
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
       schema:
         type: string
-        format: date-time
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+    AccountId:
+      name: AccountId
+      in: path
+      description: AccountId
+      required: true
+      schema:
+        type: string
     FromStatementDateTimeParam:
       in: query
       name: fromStatementDateTime
@@ -1330,18 +1334,11 @@ components:
       schema:
         type: string
         format: date-time
-    x-fapi-customer-ip-address-Param:
+    x-customer-user-agent-Param:
       in: header
-      name: x-fapi-customer-ip-address
+      name: x-customer-user-agent
+      description: Indicates the user-agent that the PSU is using.
       required: false
-      description: The PSU's IP address if the PSU is currently logged in with the TPP.
-      schema:
-        type: string
-    AccountId:
-      name: AccountId
-      in: path
-      description: AccountId
-      required: true
       schema:
         type: string
     x-fapi-interaction-id-Param:
@@ -1351,11 +1348,18 @@ components:
       description: An RFC4122 UID used as a correlation id.
       schema:
         type: string
-    x-fapi-financial-id-Param:
+    x-fapi-customer-ip-address-Param:
       in: header
-      name: x-fapi-financial-id
+      name: x-fapi-customer-ip-address
+      required: false
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
+      schema:
+        type: string
+    StatementId:
+      name: StatementId
+      in: path
+      description: StatementId
       required: true
-      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
       schema:
         type: string
     AuthorizationParam:
@@ -1365,28 +1369,24 @@ components:
       description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
       schema:
         type: string
-    x-fapi-customer-last-logged-time-Param:
+    x-fapi-financial-id-Param:
       in: header
-      name: x-fapi-customer-last-logged-time
-      required: false
-      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
-      schema:
-        type: string
-        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
-    StatementId:
-      name: StatementId
-      in: path
-      description: StatementId
+      name: x-fapi-financial-id
       required: true
+      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
       schema:
         type: string
-    x-customer-user-agent-Param:
-      in: header
-      name: x-customer-user-agent
-      description: Indicates the user-agent that the PSU is using.
-      required: false
+    ToStatementDateTimeParam:
+      in: query
+      name: toStatementDateTime
+      description: 'The UTC ISO 8601 Date Time to filter statements TO
+
+        NB Time component is optional - set to 00:00:00 for just Date.
+
+        If the Date Time contains a timezone, the ASPSP must ignore the timezone component.'
       schema:
         type: string
+        format: date-time
   securitySchemes:
     PSUOAuth2Security:
       type: oauth2
