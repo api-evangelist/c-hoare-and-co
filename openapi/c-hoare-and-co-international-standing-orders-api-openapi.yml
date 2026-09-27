@@ -171,103 +171,299 @@ paths:
       - TPPOAuth2Security:
         - payments
 components:
-  responses:
-    200InternationalStandingOrderConsentsConsentIdRead:
-      description: International Standing Order Consents Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-        x-jws-signature:
-          description: Header containing a detached JWS signature of the body of the payload.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBWriteInternationalStandingOrderConsentResponse2'
-    406ErrorResponse:
-      description: Not Acceptable
-    200InternationalStandingOrdersInternationalStandingOrderPaymentIdRead:
-      description: International Standing Orders Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-        x-jws-signature:
-          description: Header containing a detached JWS signature of the body of the payload.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBWriteInternationalStandingOrderResponse2'
-    404ErrorResponse:
-      description: Not found
-    415ErrorResponse:
-      description: Unsupported Media Type
-    400ErrorResponse:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-    405ErrorResponse:
-      description: Method Not Allowed
-    201InternationalStandingOrdersCreated:
-      description: International Standing Orders Created
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-        x-jws-signature:
-          description: Header containing a detached JWS signature of the body of the payload.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBWriteInternationalStandingOrderResponse2'
-    500ErrorResponse:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-    401ErrorResponse:
-      description: Unauthorized
-    429ErrorResponse:
-      description: Too Many Requests
-      headers:
-        Retry-After:
-          description: Number in seconds to wait
-          schema:
-            type: integer
-    201InternationalStandingOrderConsentsCreated:
-      description: International Standing Order Consents Created
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-        x-jws-signature:
-          description: Header containing a detached JWS signature of the body of the payload.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBWriteInternationalStandingOrderConsentResponse2'
-    403ErrorResponse:
-      description: Forbidden
   schemas:
+    OBAddressTypeCode:
+      description: Identifies the nature of the postal address.
+      type: string
+      enum:
+      - Business
+      - Correspondence
+      - DeliveryTo
+      - MailTo
+      - POBox
+      - Postal
+      - Residential
+      - Statement
+    OBAuthorisation1:
+      description: The authorisation type request from the TPP.
+      type: object
+      properties:
+        AuthorisationType:
+          $ref: '#/components/schemas/OBExternalAuthorisation1Code'
+        CompletionDateTime:
+          description: "Date and time at which the requested authorisation flow must be completed.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+          type: string
+          format: date-time
+      required:
+      - AuthorisationType
+      additionalProperties: false
+    OBExternalAuthorisation1Code:
+      description: Type of authorisation flow requested.
+      type: string
+      enum:
+      - Any
+      - Single
+    OBWriteDataInternationalStandingOrderConsent2:
+      type: object
+      properties:
+        Permission:
+          $ref: '#/components/schemas/OBExternalPermissions2Code'
+        Initiation:
+          $ref: '#/components/schemas/OBInternationalStandingOrder2'
+        Authorisation:
+          $ref: '#/components/schemas/OBAuthorisation1'
+      required:
+      - Permission
+      - Initiation
+      additionalProperties: false
+    Meta:
+      title: MetaData
+      type: object
+      description: Meta Data relevant to the payload
+      properties:
+        TotalPages:
+          type: integer
+          format: int32
+        FirstAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+        LastAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+      additionalProperties: false
     ISODateTime:
       description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
       type: string
       format: date-time
+    OBExternalFinancialInstitutionIdentification4Code:
+      description: Name of the identification scheme, in a coded form as published in an external list.
+      type: string
+      example:
+      - UK.OBIE.BICFI
+      minLength: 1
+      maxLength: 40
+    OBCashAccountDebtor4:
+      description: Provides the details to identify the debtor account.
+      type: object
+      properties:
+        SchemeName:
+          $ref: '#/components/schemas/OBExternalAccountIdentification4Code'
+        Identification:
+          description: Identification assigned by an institution to identify an account. This identification is known by the account owner.
+          type: string
+          minLength: 1
+          maxLength: 256
+        Name:
+          description: 'Name of the account, as assigned by the account servicing institution.
+
+            Usage: The account name is the name or names of the account owner(s) represented at an account level. The account name is not the product name or the nickname of the account.'
+          type: string
+          minLength: 1
+          maxLength: 70
+        SecondaryIdentification:
+          description: "This is secondary identification of the account, as assigned by the account servicing institution. \nThis can be used by building societies to additionally identify accounts with a roll number (in addition to a sort code and account number combination)."
+          type: string
+          minLength: 1
+          maxLength: 34
+      required:
+      - SchemeName
+      - Identification
+      additionalProperties: false
+    OBErrorResponse1:
+      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+      type: object
+      properties:
+        Code:
+          description: High level textual error code, to help categorize the errors.
+          type: string
+          minLength: 1
+          maxLength: 40
+        Id:
+          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
+          type: string
+          minLength: 1
+          maxLength: 40
+        Message:
+          description: Brief Error message, e.g., 'There is something wrong with the request parameters provided'
+          type: string
+          minLength: 1
+          maxLength: 500
+        Errors:
+          items:
+            $ref: '#/components/schemas/OBError1'
+          type: array
+          minItems: 1
+      required:
+      - Code
+      - Message
+      - Errors
+      additionalProperties: false
+    OBWriteInternationalStandingOrder2:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/OBWriteDataInternationalStandingOrder2'
+        Risk:
+          $ref: '#/components/schemas/OBRisk1'
+      required:
+      - Data
+      - Risk
+      additionalProperties: false
+    OBError1:
+      type: object
+      properties:
+        ErrorCode:
+          description: Low level textual error code, e.g., UK.OBIE.Field.Missing
+          type: string
+          minLength: 1
+          maxLength: 128
+        Message:
+          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
+
+            OBIE doesn''t standardise this field'
+          type: string
+          minLength: 1
+          maxLength: 500
+        Path:
+          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
+          type: string
+          minLength: 1
+          maxLength: 500
+        Url:
+          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
+          type: string
+      required:
+      - ErrorCode
+      - Message
+      additionalProperties: false
+      minProperties: 1
+    OBExternalPaymentChargeType1Code:
+      description: Charge type, in a coded form.
+      type: string
+      example:
+      - UK.OBIE.CHAPSOut
+      - UK.OBIE.BalanceTransferOut
+      - UK.OBIE.MoneyTransferOut
+      minLength: 1
+      maxLength: 40
+    OBWriteInternationalStandingOrderConsent2:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/OBWriteDataInternationalStandingOrderConsent2'
+        Risk:
+          $ref: '#/components/schemas/OBRisk1'
+      required:
+      - Data
+      - Risk
+      additionalProperties: false
+    OBExternalStatus2Code:
+      description: Specifies the status of the authorisation flow in code form.
+      type: string
+      enum:
+      - Authorised
+      - AwaitingFurtherAuthorisation
+      - Rejected
+    OBExternalPaymentContext1Code:
+      description: Specifies the payment context
+      type: string
+      enum:
+      - BillPayment
+      - EcommerceGoods
+      - EcommerceServices
+      - Other
+      - PartyToParty
+    OBMultiAuthorisation1:
+      description: The multiple authorisation flow response from the ASPSP.
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/OBExternalStatus2Code'
+        NumberRequired:
+          description: Number of authorisations required for payment order (total required at the start of the multi authorisation journey).
+          type: integer
+          format: int32
+        NumberReceived:
+          description: Number of authorisations required for payment order (total required at the start of the multi authorisation journey).
+          type: integer
+          format: int32
+        LastUpdateDateTime:
+          description: "Last date and time at the authorisation flow was updated.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+          type: string
+          format: date-time
+        ExpirationDateTime:
+          description: "Date and time at which the requested authorisation flow must be completed.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+          type: string
+          format: date-time
+      required:
+      - Status
+      additionalProperties: false
+    OBChargeBearerType1Code:
+      description: Specifies which party/parties will bear the charges associated with the processing of the payment transaction.
+      type: string
+      enum:
+      - BorneByCreditor
+      - BorneByDebtor
+      - FollowingServiceLevel
+      - Shared
+    OBExternalPermissions2Code:
+      description: Specifies the Open Banking service request types.
+      type: string
+      enum:
+      - Create
+    OBPostalAddress6:
+      description: Information that locates and identifies a specific address, as defined by postal services.
+      type: object
+      properties:
+        AddressType:
+          $ref: '#/components/schemas/OBAddressTypeCode'
+        Department:
+          description: Identification of a division of a large organisation or building.
+          type: string
+          minLength: 1
+          maxLength: 70
+        SubDepartment:
+          description: Identification of a sub-division of a large organisation or building.
+          type: string
+          minLength: 1
+          maxLength: 70
+        StreetName:
+          description: Name of a street or thoroughfare.
+          type: string
+          minLength: 1
+          maxLength: 70
+        BuildingNumber:
+          description: Number that identifies the position of a building on a street.
+          type: string
+          minLength: 1
+          maxLength: 16
+        PostCode:
+          description: Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
+          type: string
+          minLength: 1
+          maxLength: 16
+        TownName:
+          description: Name of a built-up area, with defined boundaries, and a local government.
+          type: string
+          minLength: 1
+          maxLength: 35
+        CountrySubDivision:
+          description: Identifies a subdivision of a country such as state, region, county.
+          type: string
+          minLength: 1
+          maxLength: 35
+        Country:
+          description: Nation with its own government.
+          type: string
+          pattern: ^[A-Z]{2,2}$
+        AddressLine:
+          items:
+            type: string
+            minLength: 1
+            maxLength: 70
+          type: array
+          description: Information that locates and identifies a specific address, as defined by postal services, presented in free format text.
+          minItems: 0
+          maxItems: 7
+      additionalProperties: false
     OBInternationalStandingOrder2:
       description: The Initiation payload is sent by the initiating party to the ASPSP. It is used to request movement of funds from the debtor account to a creditor for an international standing order.
       type: object
@@ -340,43 +536,6 @@ components:
       - InstructedAmount
       - CreditorAccount
       additionalProperties: false
-    OBExternalAuthorisation1Code:
-      description: Type of authorisation flow requested.
-      type: string
-      enum:
-      - Any
-      - Single
-    OBExternalFinancialInstitutionIdentification4Code:
-      description: Name of the identification scheme, in a coded form as published in an external list.
-      type: string
-      example:
-      - UK.OBIE.BICFI
-      minLength: 1
-      maxLength: 40
-    OBAuthorisation1:
-      description: The authorisation type request from the TPP.
-      type: object
-      properties:
-        AuthorisationType:
-          $ref: '#/components/schemas/OBExternalAuthorisation1Code'
-        CompletionDateTime:
-          description: "Date and time at which the requested authorisation flow must be completed.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-          type: string
-          format: date-time
-      required:
-      - AuthorisationType
-      additionalProperties: false
-    OBWriteInternationalStandingOrder2:
-      type: object
-      properties:
-        Data:
-          $ref: '#/components/schemas/OBWriteDataInternationalStandingOrder2'
-        Risk:
-          $ref: '#/components/schemas/OBRisk1'
-      required:
-      - Data
-      - Risk
-      additionalProperties: false
     OBWriteInternationalStandingOrderResponse2:
       type: object
       properties:
@@ -391,34 +550,96 @@ components:
       - Links
       - Meta
       additionalProperties: false
-    OBError1:
+    OBSupplementaryData1:
+      description: Additional information that can not be captured in the structured fields and/or any other specific block.
+      type: object
+      properties: {}
+      additionalProperties: false
+    OBActiveCurrencyAndAmount_SimpleType:
+      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
+      type: string
+      pattern: ^\d{1,13}\.\d{1,5}$
+    Links:
+      type: object
+      description: Links relevant to the payload
+      properties:
+        Self:
+          type: string
+          format: uri
+        First:
+          type: string
+          format: uri
+        Prev:
+          type: string
+          format: uri
+        Next:
+          type: string
+          format: uri
+        Last:
+          type: string
+          format: uri
+      additionalProperties: false
+      required:
+      - Self
+    OBExternalAccountIdentification4Code:
+      description: Name of the identification scheme, in a coded form as published in an external list.
+      type: string
+      example:
+      - UK.OBIE.BBAN
+      - UK.OBIE.IBAN
+      - UK.OBIE.PAN
+      - UK.OBIE.Paym
+      - UK.OBIE.SortCodeAccountNumber
+      minLength: 1
+      maxLength: 40
+    OBWriteDataInternationalStandingOrder2:
       type: object
       properties:
-        ErrorCode:
-          description: Low level textual error code, e.g., UK.OBIE.Field.Missing
+        ConsentId:
+          description: 'OB: Unique identification as assigned by the ASPSP to uniquely identify the consent resource.'
           type: string
           minLength: 1
           maxLength: 128
-        Message:
-          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
-
-            OBIE doesn''t standardise this field'
-          type: string
-          minLength: 1
-          maxLength: 500
-        Path:
-          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
-          type: string
-          minLength: 1
-          maxLength: 500
-        Url:
-          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
-          type: string
+        Initiation:
+          $ref: '#/components/schemas/OBInternationalStandingOrder2'
       required:
-      - ErrorCode
-      - Message
+      - ConsentId
+      - Initiation
       additionalProperties: false
-      minProperties: 1
+    OBExternalConsentStatus1Code:
+      description: Specifies the status of resource in code form.
+      type: string
+      enum:
+      - Authorised
+      - AwaitingAuthorisation
+      - Consumed
+      - Rejected
+    OBCharge2:
+      description: Set of elements used to provide details of a charge for the payment initiation.
+      type: object
+      properties:
+        ChargeBearer:
+          $ref: '#/components/schemas/OBChargeBearerType1Code'
+        Type:
+          $ref: '#/components/schemas/OBExternalPaymentChargeType1Code'
+        Amount:
+          type: object
+          properties:
+            Amount:
+              $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
+            Currency:
+              type: string
+              pattern: ^[A-Z]{3,3}$
+          required:
+          - Amount
+          - Currency
+          additionalProperties: false
+          description: Amount of money associated with the charge type.
+      required:
+      - ChargeBearer
+      - Type
+      - Amount
+      additionalProperties: false
     OBWriteDataInternationalStandingOrderConsentResponse2:
       type: object
       properties:
@@ -460,65 +681,15 @@ components:
       - Permission
       - Initiation
       additionalProperties: false
-    OBCharge2:
-      description: Set of elements used to provide details of a charge for the payment initiation.
-      type: object
-      properties:
-        ChargeBearer:
-          $ref: '#/components/schemas/OBChargeBearerType1Code'
-        Type:
-          $ref: '#/components/schemas/OBExternalPaymentChargeType1Code'
-        Amount:
-          type: object
-          properties:
-            Amount:
-              $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
-            Currency:
-              type: string
-              pattern: ^[A-Z]{3,3}$
-          required:
-          - Amount
-          - Currency
-          additionalProperties: false
-          description: Amount of money associated with the charge type.
-      required:
-      - ChargeBearer
-      - Type
-      - Amount
-      additionalProperties: false
-    OBAddressTypeCode:
-      description: Identifies the nature of the postal address.
-      type: string
-      enum:
-      - Business
-      - Correspondence
-      - DeliveryTo
-      - MailTo
-      - POBox
-      - Postal
-      - Residential
-      - Statement
-    OBBranchAndFinancialInstitutionIdentification6:
-      description: 'Party that manages the account on behalf of the account owner, that is manages the registration and booking of entries on the account, calculates balances on the account and provides information about the account.
+    OBExternalPurpose1Code1:
+      description: 'Specifies the external purpose code in the format of character string with a maximum length of 4 characters.
 
-        This is the servicer of the beneficiary account.'
-      type: object
-      properties:
-        SchemeName:
-          $ref: '#/components/schemas/OBExternalFinancialInstitutionIdentification4Code'
-        Identification:
-          description: Unique and unambiguous identification of the servicing institution.
-          type: string
-          minLength: 1
-          maxLength: 35
-        Name:
-          description: Name by which an agent is known and which is usually used to identify that agent.
-          type: string
-          minLength: 1
-          maxLength: 140
-        PostalAddress:
-          $ref: '#/components/schemas/OBPostalAddress6'
-      additionalProperties: false
+        The list of valid codes is an external code list published separately.
+
+        External code sets can be downloaded from www.iso20022.org.'
+      type: string
+      minLength: 1
+      maxLength: 4
     OBCashAccountCreditor3:
       description: Provides the details to identify the beneficiary account.
       type: object
@@ -549,92 +720,6 @@ components:
       - Identification
       - Name
       additionalProperties: false
-    OBMultiAuthorisation1:
-      description: The multiple authorisation flow response from the ASPSP.
-      type: object
-      properties:
-        Status:
-          $ref: '#/components/schemas/OBExternalStatus2Code'
-        NumberRequired:
-          description: Number of authorisations required for payment order (total required at the start of the multi authorisation journey).
-          type: integer
-          format: int32
-        NumberReceived:
-          description: Number of authorisations required for payment order (total required at the start of the multi authorisation journey).
-          type: integer
-          format: int32
-        LastUpdateDateTime:
-          description: "Last date and time at the authorisation flow was updated.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-          type: string
-          format: date-time
-        ExpirationDateTime:
-          description: "Date and time at which the requested authorisation flow must be completed.\nAll dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-          type: string
-          format: date-time
-      required:
-      - Status
-      additionalProperties: false
-    OBWriteDataInternationalStandingOrder2:
-      type: object
-      properties:
-        ConsentId:
-          description: 'OB: Unique identification as assigned by the ASPSP to uniquely identify the consent resource.'
-          type: string
-          minLength: 1
-          maxLength: 128
-        Initiation:
-          $ref: '#/components/schemas/OBInternationalStandingOrder2'
-      required:
-      - ConsentId
-      - Initiation
-      additionalProperties: false
-    OBExternalAccountIdentification4Code:
-      description: Name of the identification scheme, in a coded form as published in an external list.
-      type: string
-      example:
-      - UK.OBIE.BBAN
-      - UK.OBIE.IBAN
-      - UK.OBIE.PAN
-      - UK.OBIE.Paym
-      - UK.OBIE.SortCodeAccountNumber
-      minLength: 1
-      maxLength: 40
-    OBWriteInternationalStandingOrderConsent2:
-      type: object
-      properties:
-        Data:
-          $ref: '#/components/schemas/OBWriteDataInternationalStandingOrderConsent2'
-        Risk:
-          $ref: '#/components/schemas/OBRisk1'
-      required:
-      - Data
-      - Risk
-      additionalProperties: false
-    OBWriteInternationalStandingOrderConsentResponse2:
-      type: object
-      properties:
-        Data:
-          $ref: '#/components/schemas/OBWriteDataInternationalStandingOrderConsentResponse2'
-        Risk:
-          $ref: '#/components/schemas/OBRisk1'
-        Links:
-          $ref: '#/components/schemas/Links'
-        Meta:
-          $ref: '#/components/schemas/Meta'
-      required:
-      - Data
-      - Risk
-      - Links
-      - Meta
-      additionalProperties: false
-    OBChargeBearerType1Code:
-      description: Specifies which party/parties will bear the charges associated with the processing of the payment transaction.
-      type: string
-      enum:
-      - BorneByCreditor
-      - BorneByDebtor
-      - FollowingServiceLevel
-      - Shared
     OBRisk1:
       description: The Risk section is sent by the initiating party to the ASPSP. It is used to specify additional details for risk scoring for Payments.
       type: object
@@ -702,42 +787,23 @@ components:
           - Country
           additionalProperties: false
       additionalProperties: false
-    OBExternalPurpose1Code1:
-      description: 'Specifies the external purpose code in the format of character string with a maximum length of 4 characters.
-
-        The list of valid codes is an external code list published separately.
-
-        External code sets can be downloaded from www.iso20022.org.'
-      type: string
-      minLength: 1
-      maxLength: 4
-    OBExternalPermissions2Code:
-      description: Specifies the Open Banking service request types.
-      type: string
-      enum:
-      - Create
-    Links:
+    OBWriteInternationalStandingOrderConsentResponse2:
       type: object
-      description: Links relevant to the payload
       properties:
-        Self:
-          type: string
-          format: uri
-        First:
-          type: string
-          format: uri
-        Prev:
-          type: string
-          format: uri
-        Next:
-          type: string
-          format: uri
-        Last:
-          type: string
-          format: uri
-      additionalProperties: false
+        Data:
+          $ref: '#/components/schemas/OBWriteDataInternationalStandingOrderConsentResponse2'
+        Risk:
+          $ref: '#/components/schemas/OBRisk1'
+        Links:
+          $ref: '#/components/schemas/Links'
+        Meta:
+          $ref: '#/components/schemas/Meta'
       required:
-      - Self
+      - Data
+      - Risk
+      - Links
+      - Meta
+      additionalProperties: false
     OBPartyIdentification43:
       description: Party to which an amount of money is due.
       type: object
@@ -750,128 +816,6 @@ components:
         PostalAddress:
           $ref: '#/components/schemas/OBPostalAddress6'
       additionalProperties: false
-    OBSupplementaryData1:
-      description: Additional information that can not be captured in the structured fields and/or any other specific block.
-      type: object
-      properties: {}
-      additionalProperties: false
-    OBExternalStatus2Code:
-      description: Specifies the status of the authorisation flow in code form.
-      type: string
-      enum:
-      - Authorised
-      - AwaitingFurtherAuthorisation
-      - Rejected
-    OBActiveCurrencyAndAmount_SimpleType:
-      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
-      type: string
-      pattern: ^\d{1,13}\.\d{1,5}$
-    OBExternalPaymentContext1Code:
-      description: Specifies the payment context
-      type: string
-      enum:
-      - BillPayment
-      - EcommerceGoods
-      - EcommerceServices
-      - Other
-      - PartyToParty
-    OBPostalAddress6:
-      description: Information that locates and identifies a specific address, as defined by postal services.
-      type: object
-      properties:
-        AddressType:
-          $ref: '#/components/schemas/OBAddressTypeCode'
-        Department:
-          description: Identification of a division of a large organisation or building.
-          type: string
-          minLength: 1
-          maxLength: 70
-        SubDepartment:
-          description: Identification of a sub-division of a large organisation or building.
-          type: string
-          minLength: 1
-          maxLength: 70
-        StreetName:
-          description: Name of a street or thoroughfare.
-          type: string
-          minLength: 1
-          maxLength: 70
-        BuildingNumber:
-          description: Number that identifies the position of a building on a street.
-          type: string
-          minLength: 1
-          maxLength: 16
-        PostCode:
-          description: Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
-          type: string
-          minLength: 1
-          maxLength: 16
-        TownName:
-          description: Name of a built-up area, with defined boundaries, and a local government.
-          type: string
-          minLength: 1
-          maxLength: 35
-        CountrySubDivision:
-          description: Identifies a subdivision of a country such as state, region, county.
-          type: string
-          minLength: 1
-          maxLength: 35
-        Country:
-          description: Nation with its own government.
-          type: string
-          pattern: ^[A-Z]{2,2}$
-        AddressLine:
-          items:
-            type: string
-            minLength: 1
-            maxLength: 70
-          type: array
-          description: Information that locates and identifies a specific address, as defined by postal services, presented in free format text.
-          minItems: 0
-          maxItems: 7
-      additionalProperties: false
-    Meta:
-      title: MetaData
-      type: object
-      description: Meta Data relevant to the payload
-      properties:
-        TotalPages:
-          type: integer
-          format: int32
-        FirstAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-        LastAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-      additionalProperties: false
-    OBErrorResponse1:
-      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
-      type: object
-      properties:
-        Code:
-          description: High level textual error code, to help categorize the errors.
-          type: string
-          minLength: 1
-          maxLength: 40
-        Id:
-          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
-          type: string
-          minLength: 1
-          maxLength: 40
-        Message:
-          description: Brief Error message, e.g., 'There is something wrong with the request parameters provided'
-          type: string
-          minLength: 1
-          maxLength: 500
-        Errors:
-          items:
-            $ref: '#/components/schemas/OBError1'
-          type: array
-          minItems: 1
-      required:
-      - Code
-      - Message
-      - Errors
-      additionalProperties: false
     OBExternalStatus1Code:
       description: Specifies the status of resource in code form.
       type: string
@@ -879,62 +823,26 @@ components:
       - InitiationCompleted
       - InitiationFailed
       - InitiationPending
-    OBExternalPaymentChargeType1Code:
-      description: Charge type, in a coded form.
-      type: string
-      example:
-      - UK.OBIE.CHAPSOut
-      - UK.OBIE.BalanceTransferOut
-      - UK.OBIE.MoneyTransferOut
-      minLength: 1
-      maxLength: 40
-    OBCashAccountDebtor4:
-      description: Provides the details to identify the debtor account.
+    OBBranchAndFinancialInstitutionIdentification6:
+      description: 'Party that manages the account on behalf of the account owner, that is manages the registration and booking of entries on the account, calculates balances on the account and provides information about the account.
+
+        This is the servicer of the beneficiary account.'
       type: object
       properties:
         SchemeName:
-          $ref: '#/components/schemas/OBExternalAccountIdentification4Code'
+          $ref: '#/components/schemas/OBExternalFinancialInstitutionIdentification4Code'
         Identification:
-          description: Identification assigned by an institution to identify an account. This identification is known by the account owner.
+          description: Unique and unambiguous identification of the servicing institution.
           type: string
           minLength: 1
-          maxLength: 256
+          maxLength: 35
         Name:
-          description: 'Name of the account, as assigned by the account servicing institution.
-
-            Usage: The account name is the name or names of the account owner(s) represented at an account level. The account name is not the product name or the nickname of the account.'
+          description: Name by which an agent is known and which is usually used to identify that agent.
           type: string
           minLength: 1
-          maxLength: 70
-        SecondaryIdentification:
-          description: "This is secondary identification of the account, as assigned by the account servicing institution. \nThis can be used by building societies to additionally identify accounts with a roll number (in addition to a sort code and account number combination)."
-          type: string
-          minLength: 1
-          maxLength: 34
-      required:
-      - SchemeName
-      - Identification
-      additionalProperties: false
-    OBExternalConsentStatus1Code:
-      description: Specifies the status of resource in code form.
-      type: string
-      enum:
-      - Authorised
-      - AwaitingAuthorisation
-      - Consumed
-      - Rejected
-    OBWriteDataInternationalStandingOrderConsent2:
-      type: object
-      properties:
-        Permission:
-          $ref: '#/components/schemas/OBExternalPermissions2Code'
-        Initiation:
-          $ref: '#/components/schemas/OBInternationalStandingOrder2'
-        Authorisation:
-          $ref: '#/components/schemas/OBAuthorisation1'
-      required:
-      - Permission
-      - Initiation
+          maxLength: 140
+        PostalAddress:
+          $ref: '#/components/schemas/OBPostalAddress6'
       additionalProperties: false
     OBWriteDataInternationalStandingOrderResponse2:
       type: object
@@ -976,6 +884,172 @@ components:
       - StatusUpdateDateTime
       - Initiation
       additionalProperties: false
+  responses:
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+    200InternationalStandingOrdersInternationalStandingOrderPaymentIdRead:
+      description: International Standing Orders Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+        x-jws-signature:
+          description: Header containing a detached JWS signature of the body of the payload.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBWriteInternationalStandingOrderResponse2'
+    401ErrorResponse:
+      description: Unauthorized
+    404ErrorResponse:
+      description: Not found
+    201InternationalStandingOrderConsentsCreated:
+      description: International Standing Order Consents Created
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+        x-jws-signature:
+          description: Header containing a detached JWS signature of the body of the payload.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBWriteInternationalStandingOrderConsentResponse2'
+    201InternationalStandingOrdersCreated:
+      description: International Standing Orders Created
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+        x-jws-signature:
+          description: Header containing a detached JWS signature of the body of the payload.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBWriteInternationalStandingOrderResponse2'
+    403ErrorResponse:
+      description: Forbidden
+    429ErrorResponse:
+      description: Too Many Requests
+      headers:
+        Retry-After:
+          description: Number in seconds to wait
+          schema:
+            type: integer
+    200InternationalStandingOrderConsentsConsentIdRead:
+      description: International Standing Order Consents Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+        x-jws-signature:
+          description: Header containing a detached JWS signature of the body of the payload.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBWriteInternationalStandingOrderConsentResponse2'
+    415ErrorResponse:
+      description: Unsupported Media Type
+    405ErrorResponse:
+      description: Method Not Allowed
+    400ErrorResponse:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+    406ErrorResponse:
+      description: Not Acceptable
+  parameters:
+    x-fapi-financial-id-Param:
+      in: header
+      name: x-fapi-financial-id
+      required: true
+      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
+      schema:
+        type: string
+    x-idempotency-key:
+      name: x-idempotency-key
+      in: header
+      description: Every request will be processed only once per x-idempotency-key.  The Idempotency Key will be valid for 24 hours.
+      required: true
+      schema:
+        type: string
+        pattern: ^(?!\s)(.*)(\S)$
+        maxLength: 40
+    ConsentId:
+      name: ConsentId
+      in: path
+      description: ConsentId
+      required: true
+      schema:
+        type: string
+    x-fapi-interaction-id-Param:
+      in: header
+      name: x-fapi-interaction-id
+      required: false
+      description: An RFC4122 UID used as a correlation id.
+      schema:
+        type: string
+    x-fapi-customer-last-logged-time-Param:
+      in: header
+      name: x-fapi-customer-last-logged-time
+      required: false
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      schema:
+        type: string
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+    x-jws-signature-Param:
+      in: header
+      name: x-jws-signature
+      required: true
+      description: A detached JWS signature of the body of the payload.
+      schema:
+        type: string
+    InternationalStandingOrderPaymentId:
+      name: InternationalStandingOrderPaymentId
+      in: path
+      description: InternationalStandingOrderPaymentId
+      required: true
+      schema:
+        type: string
+    AuthorizationParam:
+      in: header
+      name: Authorization
+      required: true
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      schema:
+        type: string
+    x-customer-user-agent-Param:
+      in: header
+      name: x-customer-user-agent
+      description: Indicates the user-agent that the PSU is using.
+      required: false
+      schema:
+        type: string
+    x-fapi-customer-ip-address-Param:
+      in: header
+      name: x-fapi-customer-ip-address
+      required: false
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
+      schema:
+        type: string
   requestBodies:
     OBWriteInternationalStandingOrderConsent2Param:
       description: Default
@@ -991,80 +1065,6 @@ components:
           schema:
             $ref: '#/components/schemas/OBWriteInternationalStandingOrder2'
       required: true
-  parameters:
-    x-idempotency-key:
-      name: x-idempotency-key
-      in: header
-      description: Every request will be processed only once per x-idempotency-key.  The Idempotency Key will be valid for 24 hours.
-      required: true
-      schema:
-        type: string
-        pattern: ^(?!\s)(.*)(\S)$
-        maxLength: 40
-    x-fapi-customer-last-logged-time-Param:
-      in: header
-      name: x-fapi-customer-last-logged-time
-      required: false
-      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
-      schema:
-        type: string
-        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
-    x-customer-user-agent-Param:
-      in: header
-      name: x-customer-user-agent
-      description: Indicates the user-agent that the PSU is using.
-      required: false
-      schema:
-        type: string
-    x-fapi-interaction-id-Param:
-      in: header
-      name: x-fapi-interaction-id
-      required: false
-      description: An RFC4122 UID used as a correlation id.
-      schema:
-        type: string
-    x-fapi-customer-ip-address-Param:
-      in: header
-      name: x-fapi-customer-ip-address
-      required: false
-      description: The PSU's IP address if the PSU is currently logged in with the TPP.
-      schema:
-        type: string
-    ConsentId:
-      name: ConsentId
-      in: path
-      description: ConsentId
-      required: true
-      schema:
-        type: string
-    AuthorizationParam:
-      in: header
-      name: Authorization
-      required: true
-      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
-      schema:
-        type: string
-    InternationalStandingOrderPaymentId:
-      name: InternationalStandingOrderPaymentId
-      in: path
-      description: InternationalStandingOrderPaymentId
-      required: true
-      schema:
-        type: string
-    x-fapi-financial-id-Param:
-      in: header
-      name: x-fapi-financial-id
-      required: true
-      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
-      schema:
-        type: string
-    x-jws-signature-Param:
-      in: header
-      name: x-jws-signature
-      required: true
-      description: A detached JWS signature of the body of the payload.
-      schema:
-        type: string
   securitySchemes:
     PSUOAuth2Security:
       type: oauth2
