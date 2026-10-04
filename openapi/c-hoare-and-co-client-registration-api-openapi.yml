@@ -87,31 +87,6 @@ paths:
       operationId: deleteRegisterByClientId
       x-operation-id-source: derived
 components:
-  responses:
-    401Error:
-      description: Request failed due to unknown or invalid Client or invalid access token
-      headers:
-        WWW-Authenticate:
-          description: Response header field specified in https://tools.ietf.org/html/rfc6750
-          schema:
-            type: string
-    400Error:
-      description: Request failed due to client error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RegistrationError'
-    403Error:
-      description: The client does not have permission to read, update or delete the Client
-    OBClientRegistration1:
-      description: Client registration
-      content:
-        application/json:
-          schema:
-            allOf:
-            - $ref: '#/components/schemas/OBRegistrationProperties1'
-            - required:
-              - client_id
   requestBodies:
     ClientRegistration:
       description: A request to register a Software Statement Assertion with an ASPSP
@@ -121,22 +96,38 @@ components:
             type: string
             format: OBClientRegistration1
       required: true
-  parameters:
-    Authorization:
-      in: header
-      name: Authorization
-      required: true
-      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
-      schema:
-        type: string
-    ClientId:
-      name: ClientId
-      description: The client ID
-      in: path
-      required: true
-      schema:
-        type: string
+  responses:
+    400Error:
+      description: Request failed due to client error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RegistrationError'
+    OBClientRegistration1:
+      description: Client registration
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/OBRegistrationProperties1'
+            - required:
+              - client_id
+    401Error:
+      description: Request failed due to unknown or invalid Client or invalid access token
+      headers:
+        WWW-Authenticate:
+          description: Response header field specified in https://tools.ietf.org/html/rfc6750
+          schema:
+            type: string
+    403Error:
+      description: The client does not have permission to read, update or delete the Client
   schemas:
+    SupportedAlgorithms:
+      type: string
+      enum:
+      - RS256
+      - PS256
+      - ES256
     OBRegistrationProperties1:
       type: object
       required:
@@ -239,12 +230,21 @@ components:
           type: string
           minLength: 1
           maxLength: 500
-    SupportedAlgorithms:
-      type: string
-      enum:
-      - RS256
-      - PS256
-      - ES256
+  parameters:
+    ClientId:
+      name: ClientId
+      description: The client ID
+      in: path
+      required: true
+      schema:
+        type: string
+    Authorization:
+      in: header
+      name: Authorization
+      required: true
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      schema:
+        type: string
   securitySchemes:
     TPPOAuth2Security:
       type: oauth2
