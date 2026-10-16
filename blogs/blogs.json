@@ -1,0 +1,21 @@
+{
+  "repo": "c-hoare-and-co",
+  "feeds": [
+    {
+      "source": "https://www.hoaresbank.co.uk/category/news",
+      "feed_url": "https://www.hoaresbank.co.uk/category/news",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://www.hoaresbank.co.uk/taxonomy/term/11/feed",
+      "feed_url": "https://www.hoaresbank.co.uk/taxonomy/term/11/feed",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-10-10T13:15:00Z"
+}
