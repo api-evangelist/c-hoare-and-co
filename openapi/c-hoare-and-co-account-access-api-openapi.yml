@@ -127,7 +127,71 @@ paths:
       - TPPOAuth2Security:
         - accounts
 components:
+  parameters:
+    x-fapi-financial-id-Param:
+      in: header
+      name: x-fapi-financial-id
+      required: true
+      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
+      schema:
+        type: string
+    ConsentId:
+      name: ConsentId
+      in: path
+      description: ConsentId
+      required: true
+      schema:
+        type: string
+    x-customer-user-agent-Param:
+      in: header
+      name: x-customer-user-agent
+      description: Indicates the user-agent that the PSU is using.
+      required: false
+      schema:
+        type: string
+    x-fapi-interaction-id-Param:
+      in: header
+      name: x-fapi-interaction-id
+      required: false
+      description: An RFC4122 UID used as a correlation id.
+      schema:
+        type: string
+    x-fapi-customer-last-logged-time-Param:
+      in: header
+      name: x-fapi-customer-last-logged-time
+      required: false
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      schema:
+        type: string
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+    AuthorizationParam:
+      in: header
+      name: Authorization
+      required: true
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      schema:
+        type: string
+    x-fapi-customer-ip-address-Param:
+      in: header
+      name: x-fapi-customer-ip-address
+      required: false
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
+      schema:
+        type: string
   schemas:
+    Meta:
+      title: MetaData
+      type: object
+      description: Meta Data relevant to the payload
+      properties:
+        TotalPages:
+          type: integer
+          format: int32
+        FirstAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+        LastAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+      additionalProperties: false
     OBExternalPermissions1Code:
       description: Specifies the Open Banking account access data types. This is a list of the data clusters being consented by the PSU, and requested for authorisation with the ASPSP.
       type: string
@@ -153,6 +217,22 @@ components:
       - ReadTransactionsCredits
       - ReadTransactionsDebits
       - ReadTransactionsDetail
+    OBReadConsent1:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/OBReadData1'
+        Risk:
+          $ref: '#/components/schemas/OBRisk2'
+      required:
+      - Data
+      - Risk
+      additionalProperties: false
+    OBRisk2:
+      description: The Risk section is sent by the initiating party to the ASPSP. It is used to specify additional details for risk scoring for Account Info.
+      type: object
+      properties: {}
+      additionalProperties: false
     OBReadConsentResponse1:
       type: object
       properties:
@@ -211,6 +291,14 @@ components:
       - Links
       - Meta
       additionalProperties: false
+    OBExternalRequestStatus1Code:
+      description: Specifies the status of consent resource in code form.
+      type: string
+      enum:
+      - Authorised
+      - AwaitingAuthorisation
+      - Rejected
+      - Revoked
     Links:
       type: object
       description: Links relevant to the payload
@@ -233,19 +321,10 @@ components:
       additionalProperties: false
       required:
       - Self
-    Meta:
-      title: MetaData
-      type: object
-      description: Meta Data relevant to the payload
-      properties:
-        TotalPages:
-          type: integer
-          format: int32
-        FirstAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-        LastAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-      additionalProperties: false
+    ISODateTime:
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: string
+      format: date-time
     OBError1:
       type: object
       properties:
@@ -274,19 +353,6 @@ components:
       - Message
       additionalProperties: false
       minProperties: 1
-    OBRisk2:
-      description: The Risk section is sent by the initiating party to the ASPSP. It is used to specify additional details for risk scoring for Account Info.
-      type: object
-      properties: {}
-      additionalProperties: false
-    OBExternalRequestStatus1Code:
-      description: Specifies the status of consent resource in code form.
-      type: string
-      enum:
-      - Authorised
-      - AwaitingAuthorisation
-      - Rejected
-      - Revoked
     OBReadData1:
       type: object
       properties:
@@ -310,21 +376,6 @@ components:
           format: date-time
       required:
       - Permissions
-      additionalProperties: false
-    ISODateTime:
-      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-      type: string
-      format: date-time
-    OBReadConsent1:
-      type: object
-      properties:
-        Data:
-          $ref: '#/components/schemas/OBReadData1'
-        Risk:
-          $ref: '#/components/schemas/OBRisk2'
-      required:
-      - Data
-      - Risk
       additionalProperties: false
     OBErrorResponse1:
       description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
@@ -356,43 +407,6 @@ components:
       - Errors
       additionalProperties: false
   responses:
-    415ErrorResponse:
-      description: Unsupported Media Type
-    429ErrorResponse:
-      description: Too Many Requests
-      headers:
-        Retry-After:
-          description: Number in seconds to wait
-          schema:
-            type: integer
-    405ErrorResponse:
-      description: Method Not Allowed
-    401ErrorResponse:
-      description: Unauthorized
-    204AccountAccessConsentsConsentIdDeleted:
-      description: Account Access Consents Deleted
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-    200AccountAccessConsentsConsentIdRead:
-      description: Account Access Consents Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBReadConsentResponse1'
-    400ErrorResponse:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
     201AccountAccessConsentsCreated:
       description: Account Access Consents Created
       headers:
@@ -404,69 +418,55 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OBReadConsentResponse1'
+    415ErrorResponse:
+      description: Unsupported Media Type
+    406ErrorResponse:
+      description: Not Acceptable
     500ErrorResponse:
       description: Internal Server Error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OBErrorResponse1'
-    406ErrorResponse:
-      description: Not Acceptable
+    204AccountAccessConsentsConsentIdDeleted:
+      description: Account Access Consents Deleted
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+    405ErrorResponse:
+      description: Method Not Allowed
     403ErrorResponse:
       description: Forbidden
+    400ErrorResponse:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+    429ErrorResponse:
+      description: Too Many Requests
+      headers:
+        Retry-After:
+          description: Number in seconds to wait
+          schema:
+            type: integer
     404ErrorResponse:
       description: Not found
-  parameters:
-    x-fapi-customer-last-logged-time-Param:
-      in: header
-      name: x-fapi-customer-last-logged-time
-      required: false
-      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
-      schema:
-        type: string
-        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
-    x-fapi-financial-id-Param:
-      in: header
-      name: x-fapi-financial-id
-      required: true
-      description: The unique id of the ASPSP to which the request is issued. The unique id will be issued by OB.
-      schema:
-        type: string
-    x-fapi-interaction-id-Param:
-      in: header
-      name: x-fapi-interaction-id
-      required: false
-      description: An RFC4122 UID used as a correlation id.
-      schema:
-        type: string
-    AuthorizationParam:
-      in: header
-      name: Authorization
-      required: true
-      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
-      schema:
-        type: string
-    ConsentId:
-      name: ConsentId
-      in: path
-      description: ConsentId
-      required: true
-      schema:
-        type: string
-    x-customer-user-agent-Param:
-      in: header
-      name: x-customer-user-agent
-      description: Indicates the user-agent that the PSU is using.
-      required: false
-      schema:
-        type: string
-    x-fapi-customer-ip-address-Param:
-      in: header
-      name: x-fapi-customer-ip-address
-      required: false
-      description: The PSU's IP address if the PSU is currently logged in with the TPP.
-      schema:
-        type: string
+    401ErrorResponse:
+      description: Unauthorized
+    200AccountAccessConsentsConsentIdRead:
+      description: Account Access Consents Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadConsentResponse1'
   requestBodies:
     OBReadConsent1Param:
       description: Default

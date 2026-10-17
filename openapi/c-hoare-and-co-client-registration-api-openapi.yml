@@ -87,15 +87,6 @@ paths:
       operationId: deleteRegisterByClientId
       x-operation-id-source: derived
 components:
-  requestBodies:
-    ClientRegistration:
-      description: A request to register a Software Statement Assertion with an ASPSP
-      content:
-        application/json:
-          schema:
-            type: string
-            format: OBClientRegistration1
-      required: true
   responses:
     400Error:
       description: Request failed due to client error
@@ -103,15 +94,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/RegistrationError'
-    OBClientRegistration1:
-      description: Client registration
-      content:
-        application/json:
-          schema:
-            allOf:
-            - $ref: '#/components/schemas/OBRegistrationProperties1'
-            - required:
-              - client_id
     401Error:
       description: Request failed due to unknown or invalid Client or invalid access token
       headers:
@@ -121,7 +103,56 @@ components:
             type: string
     403Error:
       description: The client does not have permission to read, update or delete the Client
+    OBClientRegistration1:
+      description: Client registration
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/OBRegistrationProperties1'
+            - required:
+              - client_id
+  parameters:
+    ClientId:
+      name: ClientId
+      description: The client ID
+      in: path
+      required: true
+      schema:
+        type: string
+    Authorization:
+      in: header
+      name: Authorization
+      required: true
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      schema:
+        type: string
+  requestBodies:
+    ClientRegistration:
+      description: A request to register a Software Statement Assertion with an ASPSP
+      content:
+        application/json:
+          schema:
+            type: string
+            format: OBClientRegistration1
+      required: true
   schemas:
+    RegistrationError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_redirect_uri
+          - invalid_client_metadata
+          - invalid_software_statement
+          - unapproved_software_statement
+        error_description:
+          type: string
+          minLength: 1
+          maxLength: 500
     SupportedAlgorithms:
       type: string
       enum:
@@ -214,37 +245,6 @@ components:
           type: string
           minLength: 1
           maxLength: 128
-    RegistrationError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          enum:
-          - invalid_redirect_uri
-          - invalid_client_metadata
-          - invalid_software_statement
-          - unapproved_software_statement
-        error_description:
-          type: string
-          minLength: 1
-          maxLength: 500
-  parameters:
-    ClientId:
-      name: ClientId
-      description: The client ID
-      in: path
-      required: true
-      schema:
-        type: string
-    Authorization:
-      in: header
-      name: Authorization
-      required: true
-      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
-      schema:
-        type: string
   securitySchemes:
     TPPOAuth2Security:
       type: oauth2
