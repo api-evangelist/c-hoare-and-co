@@ -1,4 +1,4 @@
-# C. Hoare & Co. (c-hoare-and-co)
+# C. Hoare & Co.
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,108 +64,145 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-C. Hoare & Co. (Hoares Bank) is the United Kingdom's oldest privately-owned bank, founded in 1672 by Sir Richard Hoare and owned continuously by the Hoare family for twelve generations. It offers bespoke private banking, lending, and wealth services from Fleet Street in London and an office in Cambridge. It is an FCA-authorised ASPSP and a regulated participant in UK Open Banking under PSD2. As a private bank it is not one of the CMA9 mandated institutions, so it publishes the OBIE Read/Write APIs — Account & Transaction Information, Payment Initiation, and Dynamic Client Registration — through a MuleSoft Anypoint developer portal, but does not publish the unauthenticated Open Data (ATM / branch / product) reference APIs.
+C. Hoare & Co. (Hoares Bank) is the United Kingdom's oldest privately-owned bank, founded in 1672 by Sir Richard Hoare and owned continuously by the Hoare family for twelve generations, operating a bespoke private banking, lending, and wealth business from Fleet Street in London and an office in Cambridge. It is an FCA-authorised ASPSP (Account Servicing Payment Service Provider) and a regulated participant in UK Open Banking under PSD2. As a private bank it is not one of the CMA9 mandated institutions, so it does not publish the unauthenticated Open Data (ATM / branch / product) reference APIs; instead it exposes the OBIE Read/Write standard through a MuleSoft Anypoint developer portal at developer.hoaresbank.co.uk, publishing Account and Transaction Information (AIS), Payment Initiation (PIS), and Dynamic Client Registration conformant to the Open Banking Implementation Entity (OBIE) v3.1 standard. Production access is FAPI-secured with OAuth2/OIDC, PSD2 strong customer authentication, and mutual-TLS client authentication using OBIE/eIDAS certificates after third-party provider onboarding.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/c-hoare-and-co/refs/heads/main/apis.yml)
+**Areas:** Financial Services · Banking · Private Bank · Open Banking · PSD2 · OBIE · FAPI · United Kingdom · Payments · Account Information
 
-## Tags
+## C. Hoare & Co. on APIs.io
 
-- Financial Services
-- Banking
-- Private Bank
-- Open Banking
-- PSD2
-- OBIE
-- FAPI
-- United Kingdom
-- Payments
-- Account Information
+Everything profiled for C. Hoare & Co. is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/c-hoare-and-co/](https://apis.io/providers/c-hoare-and-co/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (20)
 
-- **Created:** 2026-07-23
-- **Modified:** 2026-07-23
+- [C. Hoare & Co. Account Access API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-account-access-api/) — The Account Access API from C. Hoare & Co. — 2 operation(s) for account access.
+- [C. Hoare & Co. Accounts API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-accounts-api/) — The Accounts API from C. Hoare & Co. — 2 operation(s) for accounts.
+- [C. Hoare & Co. Balances API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-balances-api/) — The Balances API from C. Hoare & Co. — 2 operation(s) for balances.
+- [C. Hoare & Co. Beneficiaries API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-beneficiaries-api/) — The Beneficiaries API from C. Hoare & Co. — 2 operation(s) for beneficiaries.
+- [C. Hoare & Co. Client Registration API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-client-registration-api/) — The Client Registration API from C. Hoare & Co. — 2 operation(s) for client registration.
+- [C. Hoare & Co. Direct Debits API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-direct-debits-api/) — The Direct Debits API from C. Hoare & Co. — 2 operation(s) for direct debits.
+- [C. Hoare & Co. Domestic Payments API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-domestic-payments-api/) — The Domestic Payments API from C. Hoare & Co. — 5 operation(s) for domestic payments.
+- [C. Hoare & Co. Domestic Scheduled Payments API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-domestic-scheduled-payments-api/) — The Domestic Scheduled Payments API from C. Hoare & Co. — 4 operation(s) for domestic scheduled payments.
+- [C. Hoare & Co. Domestic Standing Orders API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-domestic-standing-orders-api/) — The Domestic Standing Orders API from C. Hoare & Co. — 4 operation(s) for domestic standing orders.
+- [C. Hoare & Co. File Payments API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-file-payments-api/) — The File Payments API from C. Hoare & Co. — 6 operation(s) for file payments.
+- [C. Hoare & Co. International Payments API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-international-payments-api/) — The International Payments API from C. Hoare & Co. — 5 operation(s) for international payments.
+- [C. Hoare & Co. International Scheduled Payments API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-international-scheduled-payments-api/) — The International Scheduled Payments API from C. Hoare & Co. — 5 operation(s) for international scheduled payments.
+- [C. Hoare & Co. International Standing Orders API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-international-standing-orders-api/) — The International Standing Orders API from C. Hoare & Co. — 4 operation(s) for international standing orders.
+- [C. Hoare & Co. Offers API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-offers-api/) — The Offers API from C. Hoare & Co. — 2 operation(s) for offers.
+- [C. Hoare & Co. Partys API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-partys-api/) — The Partys API from C. Hoare & Co. — 2 operation(s) for partys.
+- [C. Hoare & Co. Products API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-products-api/) — The Products API from C. Hoare & Co. — 2 operation(s) for products.
+- [C. Hoare & Co. Scheduled Payments API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-scheduled-payments-api/) — The Scheduled Payments API from C. Hoare & Co. — 2 operation(s) for scheduled payments.
+- [C. Hoare & Co. Standing Orders API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-standing-orders-api/) — The Standing Orders API from C. Hoare & Co. — 2 operation(s) for standing orders.
+- [C. Hoare & Co. Statements API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-statements-api/) — The Statements API from C. Hoare & Co. — 5 operation(s) for statements.
+- [C. Hoare & Co. Transactions API](https://apis.io/apis/c-hoare-and-co/c-hoare-and-co-transactions-api/) — The Transactions API from C. Hoare & Co. — 3 operation(s) for transactions.
 
-## APIs
+### Published properties
 
-### C. Hoare & Co. Account and Transaction Information API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-OBIE Read/Write Account & Transaction Information (AIS) API — lets onboarded, consented AISP third-party providers retrieve C. Hoare & Co. account, balance, transaction, beneficiary, standing order, direct debit, product, and party data. Conformant to the OBIE v3.1 Read/Write standard; FAPI-secured (OAuth2/OIDC + PSD2 SCA + mTLS).
+#### MCP servers (1)
 
-- **Human URL:** [https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs](https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs)
-- **Base URL:** `https://api.hoaresbank.co.uk/open-banking/v3.1/aisp`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [c-hoare-and-co](https://apis.io/servers/c-hoare-and-co/c-hoare-and-co/)
 
-- Account Information
-- Transactions
-- Open Banking
-- AISP
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [OpenAPI](openapi/c-hoare-and-co-account-and-transaction-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs)
-- [API Reference](https://developer.hoaresbank.co.uk/apis/ob-account-and-transaction-api-v3-1-0/docs)
-- [Documentation](https://www.hoaresbank.co.uk/open-banking)
+- [C Hoare And Co Agentic Access](https://apis.io/agentic-access/c-hoare-and-co/c-hoare-and-co-agentic-access/)
 
-### C. Hoare & Co. Payment Initiation API
+#### Collections (3)
 
-OBIE Read/Write Payment Initiation (PIS) API — lets onboarded, consented PISP third-party providers initiate domestic and scheduled payments and standing orders and retrieve payment/consent status on behalf of C. Hoare & Co. customers. Conformant to the OBIE v3.1 Read/Write standard; FAPI-secured (OAuth2/OIDC + PSD2 SCA + mTLS).
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs](https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs)
-- **Base URL:** `https://api.hoaresbank.co.uk/open-banking/v3.1/pisp`
+- [Account and Transaction API Specification](https://apis.io/collections/c-hoare-and-co/open-c-hoare-and-co-account-and-transaction-api/)
+- [Dynamic Client Registration API](https://apis.io/collections/c-hoare-and-co/open-c-hoare-and-co-dynamic-client-registration-api/)
+- [Payment Initiation API](https://apis.io/collections/c-hoare-and-co/open-c-hoare-and-co-payment-initiation-api/)
 
-#### Tags
+#### Overlays (3)
 
-- Payment Initiation
-- Payments
-- Open Banking
-- PISP
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Properties
+- [C Hoare And Co Account And Transaction Api Overlay](https://apis.io/overlays/c-hoare-and-co/c-hoare-and-co-account-and-transaction-api-overlay/)
+- [C Hoare And Co Dynamic Client Registration Api Overlay](https://apis.io/overlays/c-hoare-and-co/c-hoare-and-co-dynamic-client-registration-api-overlay/)
+- [C Hoare And Co Payment Initiation Api Overlay](https://apis.io/overlays/c-hoare-and-co/c-hoare-and-co-payment-initiation-api-overlay/)
 
-- [OpenAPI](openapi/c-hoare-and-co-payment-initiation-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs)
-- [API Reference](https://developer.hoaresbank.co.uk/apis/ob-payment-initiation-v3-1-0/docs)
-- [Documentation](https://www.hoaresbank.co.uk/open-banking)
+#### Security (2)
 
-### C. Hoare & Co. Dynamic Client Registration API
+Authentication, trust centre, and vulnerability disclosure.
 
-OBIE Dynamic Client Registration (DCR) proxy — lets third-party providers submit a signed Software Statement Assertion to register an OAuth2 client with C. Hoare & Co. as part of TPP onboarding. Published on the developer portal as v3.1-RC1; the harvested contract is the shared OBIE client-registration standard.
+- [C Hoare And Co Authentication](https://apis.io/security/c-hoare-and-co/c-hoare-and-co-authentication/)
+- [C Hoare And Co Domain Security](https://apis.io/security/c-hoare-and-co/c-hoare-and-co-domain-security/)
 
-- **Human URL:** [https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs](https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs)
-- **Base URL:** `https://api.hoaresbank.co.uk/open-banking/v3.1`
+#### OAuth scopes (1)
 
-#### Tags
+The permissions the API asks for.
 
-- Dynamic Client Registration
-- OAuth2
-- Onboarding
-- Open Banking
+- [C Hoare And Co Scopes](https://apis.io/scopes/c-hoare-and-co/c-hoare-and-co-scopes/)
 
-#### Properties
+## Where to find this API
 
-- [OpenAPI](openapi/c-hoare-and-co-dynamic-client-registration-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs)
-- [API Reference](https://developer.hoaresbank.co.uk/apis/ob-dynamic-client-registration-proxy-v3-1-rc1/docs)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.hoaresbank.co.uk/)
-- [Developer Portal](https://developer.hoaresbank.co.uk/)
 - [Documentation](https://www.hoaresbank.co.uk/open-banking)
-- [OpenID Configuration](https://developer.hoaresbank.co.uk/.well-known/openid-configuration)
 - [Support](https://www.hoaresbank.co.uk/contact-us)
-- [Developer Support](mailto:developersupport@hoaresbank.co.uk)
-- [Terms of Service](https://www.hoaresbank.co.uk/terms-and-conditions)
-- [Privacy Policy](https://www.hoaresbank.co.uk/privacy)
-- [Legal](https://www.hoaresbank.co.uk/legal)
-- [FCA Register](https://register.fca.org.uk/s/firm?id=001b000000MfFMxAAN)
-- [Open Banking Registration](https://www.openbanking.org.uk/regulated-providers/c-hoare-co-2/)
-- [LinkedIn](https://uk.linkedin.com/company/c-hoare-&-co)
+- [Blog](https://www.hoaresbank.co.uk/category/news)
+- [Compliance](https://register.fca.org.uk/s/firm?id=001b000000MfFMxAAN)
+- [Terms of service](https://www.hoaresbank.co.uk/terms-and-conditions)
+- [Privacy policy](https://www.hoaresbank.co.uk/privacy)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 41.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 47.8 |
+| Contract governance | 4.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 47.0 |
+| Access clarity | 42.1 |
+
+**Agent readiness 34.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | verified |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 48.0** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/c-hoare-and-co/](https://apis.io/providers/c-hoare-and-co/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for C. Hoare & Co.: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/c-hoare-and-co/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
